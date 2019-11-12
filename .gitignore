@@ -1,0 +1,15 @@
+#basic
+.env
+*.env
+.idea
+.vscode
+
+
+#Nodejs
+package-lock.json
+node_modules
+yarn.lock
+
+#Go
+vendor/
+!vendor/vendor.json

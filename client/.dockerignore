@@ -1,0 +1,12 @@
+#basics
+.git
+.idea
+.vscode
+.gitignore
+
+#nodejs
+node_modules
+
+#go
+vendor/
+!vendor/vendor.json

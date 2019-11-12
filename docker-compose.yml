@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+
+#  angular:
+#    container_name: client
+#    build:
+#      context: ./client
+#    restart: always
+#    env_file:
+#      - app-variables.env
+#    ports:
+#      - 4200:4200
+#    volumes:
+#      - ./client:/app
+
+  gingonic:
+    container_name: go_server
+    build:
+      context: ./go_server
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - app-variables.env
+    ports:
+      - 3030:3030
+    volumes:
+      - ./go_server/:/go/src/app
+
+  db:
+    container_name: mysql_db
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    env_file:
+      - db.env
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
