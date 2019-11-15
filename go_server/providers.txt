@@ -1,0 +1,3 @@
+https://parzibyte.me/blog/2018/12/10/crud-golang-mysql/
+
+https://tutorialedge.net/golang/golang-mysql-tutorial/

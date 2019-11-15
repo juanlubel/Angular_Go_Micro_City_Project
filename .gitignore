@@ -4,6 +4,10 @@
 .idea
 .vscode
 
+#project
+.client
+tmp
+
 
 #Nodejs
 package-lock.json
