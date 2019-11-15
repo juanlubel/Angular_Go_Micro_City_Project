@@ -15,21 +15,21 @@ services:
 #      - ./client:/app
 
   idcards:
-    container_name: ag_idcards
+#    container_name: ag_idcards
     build:
       context: idcards
       dockerfile: Dockerfile
+    image: app/idcards
     restart: always
     env_file:
       - app-variables.env
-#    volumes:
-#      - ./idcards:/go/src/idcards
+    volumes:
+      - ./idcards:/go/src/idcards
     labels:
       traefik.backend: idcards
-#      traefik.frontend.rule: "PathPrefix:/"
-      traefik.frontend.rule: Host:idcards.docker.localhost
-#    ports:
-#      - 3030:3030
+      traefik.frontend.rule: "Host:idcards.docker.localhost"
+    ports:
+      - 3030:3030
     depends_on:
       - db
     links:
@@ -37,16 +37,15 @@ services:
 
   traefik:
     image: traefik:v1.7
-    # command: --web --docker --docker.domain=docker.localhost --logLevel=INFO --docker.exposedbydefault=false
     ports:
-      - "5050:80"
-      - "5051:8080"
+      - "80:80"
+      - "5050:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik/traefik.toml:/traefik.toml
 
   db:
-    container_name: ag_mysql_db
+#    container_name: ag_mysql_db
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -56,7 +55,7 @@ services:
       - db.env
 
   adminer:
-    container_name: ag_adminer
+#    container_name: ag_adminer
     image: adminer
     restart: always
     ports:

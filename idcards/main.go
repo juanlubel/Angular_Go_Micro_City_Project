@@ -1,16 +1,15 @@
 package main
 
 import (
-	//"Go_Gingonic_Server/driver"
-	//"Go_Gingonic_Server/greetings"
+	"idcards/db"
 	"idcards/idCards"
-	//"Go_Gingonic_Server/plain"
-	//"./user"
-	//user "Go_Gingonic_Server/user/routers.go"
+	"time"
 
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	//_ "github.com/go-sql-driver/mysql"
+	"github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"os"
 )
 
@@ -24,6 +23,28 @@ func main() {
 	app := gin.New()
 	//app.Use(favicon.New("./favicon.ico"))
 
+	// create table
+	err := db.CreateTable()
+	if err != nil {
+		panic(err)
+	}
+
+	//CORS 
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"https://foo.com"},
+		AllowMethods:     []string{"PUT", "PATCH"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "https://github.com"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
+
+	//Swagger
+	url := ginSwagger.URL("http://localhost"+port+"/swagger/doc.json") // The url pointing to API definition
+	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	v1 := app.Group("/api")
 

@@ -32,6 +32,25 @@ func ConnectSQL() (*sql.DB, error) {
 	return d, err
 }
 
+func CreateTable() error {
+	conn, err := ConnectSQL()
+
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+
+	_, err = conn.Query("CREATE TABLE IF NOT EXISTS Users(" +
+		"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
+		"name VARCHAR(255) NOT NULL UNIQUE," +
+		"email VARCHAR(255)" +
+		")")
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 //test_tb
 //name
 
