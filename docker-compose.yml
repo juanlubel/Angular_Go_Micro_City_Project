@@ -19,7 +19,7 @@ services:
     build:
       context: ./go_server
       dockerfile: Dockerfile
-    restart: always
+#    restart: always
     env_file:
       - app-variables.env
     ports:
