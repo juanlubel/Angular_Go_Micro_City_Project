@@ -1,4 +1,4 @@
-module Go_Gingonic_Server
+module idcards
 
 go 1.13
 

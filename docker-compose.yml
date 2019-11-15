@@ -14,18 +14,22 @@ services:
 #    volumes:
 #      - ./client:/app
 
-  gingonic:
-    container_name: ag_go_server
+  idcards:
+    container_name: ag_idcards
     build:
-      context: ./go_server
+      context: idcards
       dockerfile: Dockerfile
     restart: always
     env_file:
       - app-variables.env
-    ports:
-      - 3030:3030
-    volumes:
-      - ./go_server:/go/src/go_server
+#    volumes:
+#      - ./idcards:/go/src/idcards
+    labels:
+      traefik.backend: idcards
+#      traefik.frontend.rule: "PathPrefix:/"
+      traefik.frontend.rule: Host:idcards.docker.localhost
+#    ports:
+#      - 3030:3030
     depends_on:
       - db
     links:

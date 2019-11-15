@@ -3,7 +3,7 @@ package main
 import (
 	//"Go_Gingonic_Server/driver"
 	//"Go_Gingonic_Server/greetings"
-	"Go_Gingonic_Server/idCards"
+	"idcards/idCards"
 	//"Go_Gingonic_Server/plain"
 	//"./user"
 	//user "Go_Gingonic_Server/user/routers.go"
@@ -32,8 +32,8 @@ func main() {
 	//Load route greetings con /api => localhost:${port}/api/salute
 	//greetings.Salute(v1.Group("/salute"))
 
-	idCards.UserRegister(v1.Group("/user"))
-	idCards.UsersList(v1.Group("/users"))
+	idCards.UserRegister(v1.Group("/idCard"))
+	idCards.UsersList(v1.Group("/idCards"))
 
 	//Start server
 	fmt.Println("listen and serve on localhost "+port)

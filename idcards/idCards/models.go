@@ -1,8 +1,8 @@
 package idCards
 
 import (
-	"Go_Gingonic_Server/db"
 	"fmt"
+	"idcards/db"
 )
 
 type UserModel struct {
