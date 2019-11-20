@@ -1,0 +1,25 @@
+header {
+  background: #7700FF;
+}
+.logo {
+  font-weight: bold;
+}
+
+nav {
+  justify-self: right;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0; padding: 0;
+}
+nav li {
+  float: left;
+}
+nav li a {
+  padding: 1.5em;
+  text-transform: uppercase;
+  font-size: .8em;
+}
+nav li a:hover {
+  background: #8E2BFF;
+}

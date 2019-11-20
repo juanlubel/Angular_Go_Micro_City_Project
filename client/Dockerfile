@@ -1,14 +1,14 @@
-FROM node:12.2.0
+FROM trion/ng-cli
 
 WORKDIR /app
 
-COPY package*.json .
+COPY ./package*.json ./
 
 RUN npm install
-#RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli
 
 COPY . .
 
 EXPOSE 4200
 
-CMD ["npm", "start"]
+CMD npm start

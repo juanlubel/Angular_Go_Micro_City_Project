@@ -1,0 +1,22 @@
+{
+  "_comment": {
+    "_example": {
+      "/api_[service_name]/*": {
+        "target": "[service route]",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+          "^/api_[service_name]/": ""
+        }
+      }
+    }
+  },
+  "/api_idCard/*": {
+    "target": "http://idcards.docker.localhost/api",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api_idCard/": ""
+    }
+  }
+}

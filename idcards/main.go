@@ -3,7 +3,7 @@ package main
 import (
 	"idcards/db"
 	"idcards/idCards"
-	"time"
+	_ "idcards/docs"
 
 	"fmt"
 	"github.com/gin-contrib/cors"
@@ -29,10 +29,11 @@ func main() {
 		panic(err)
 	}
 
+	app.Use(cors.Default())
 	//CORS 
-	app.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://foo.com"},
-		AllowMethods:     []string{"PUT", "PATCH"},
+/*	app.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost"},
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "POST"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
@@ -40,7 +41,7 @@ func main() {
 			return origin == "https://github.com"
 		},
 		MaxAge: 12 * time.Hour,
-	}))
+	}))*/
 
 	//Swagger
 	url := ginSwagger.URL("http://localhost"+port+"/swagger/doc.json") // The url pointing to API definition

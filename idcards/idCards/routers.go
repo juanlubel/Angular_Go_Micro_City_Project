@@ -3,6 +3,7 @@ package idCards
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func UserRegister(router *gin.RouterGroup) {
@@ -34,9 +35,8 @@ func createIdCard(c *gin.Context) {
 func getIdCard(c *gin.Context) {
 	fmt.Print("details")
 	fmt.Println(c.Param("id"))
-	user := UserModel{}
-	user.Name = c.Param("id")
-	err := Details(user)
+	id, _ := strconv.Atoi(c.Param("id"))
+	user, err := Details(int64(id))
 	if err != nil {
 		fmt.Print(err)
 		c.JSON(409, gin.H{"error": err, "user": user})
@@ -79,6 +79,6 @@ func updateIdCard(c *gin.Context) {
 func getAllUsers(c *gin.Context) {
 	res, err := ListAll()
 	fmt.Println("List", res)
-	c.JSON(200, gin.H{	"msg": res,
+	c.JSON(200, gin.H{	"list": res,
 						"error": err})
 }

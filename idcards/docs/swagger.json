@@ -1,8 +1,77 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "contact": {},
-        "license": {}
+  "swagger": "2.0",
+  "basePath": "/api",
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+      "version": "v1.0",
+      "title": "IdCards Server"
+  },
+  "paths": {
+    "/idCards": {
+      "get": {
+        "summary": "Show All Users",
+        "description": "Show All Users",
+        "tags": [
+          "idCards"
+        ],
+        "operationId": "ShowAllItems",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
     },
-    "paths": {}
+    "/idCard/{id}": {
+      "get": {
+        "summary": "Show All Users",
+        "description": "Show All Users",
+        "tags": [
+          "idCards"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identification User",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "operationId": "ShowAllItems",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }

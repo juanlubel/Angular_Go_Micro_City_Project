@@ -14,18 +14,81 @@ import (
 )
 
 var doc = `{
-    "schemes": {{ marshal .Schemes }},
-    "swagger": "2.0",
-    "info": {
-        "description": "{{.Description}}",
-        "title": "{{.Title}}",
-        "contact": {},
-        "license": {},
-        "version": "{{.Version}}"
+  "swagger": "2.0",
+  "basePath": "/api",
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "info": {
+      "version": "v1.0",
+      "title": "IdCards Server"
+  },
+  "paths": {
+    "/idCards": {
+      "get": {
+        "summary": "Show All Users",
+        "description": "Show All Users",
+        "tags": [
+          "idCards"
+        ],
+        "operationId": "ShowAllItems",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
     },
-    "host": "{{.Host}}",
-    "basePath": "{{.BasePath}}",
-    "paths": {}
+    "/idCard/{id}": {
+      "get": {
+        "summary": "User Details",
+        "description": "User Details",
+        "tags": [
+          "idCards"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identification User",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "operationId": "ShowAllItems",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    }
+  }
 }`
 
 type swaggerInfo struct {

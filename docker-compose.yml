@@ -2,17 +2,25 @@ version: "3"
 
 services:
 
-#  angular:
+  angular:
 #    container_name: client
-#    build:
-#      context: ./client
-#    restart: always
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: always
 #    env_file:
 #      - app-variables.env
-#    ports:
-#      - 4200:4200
-#    volumes:
-#      - ./client:/app
+#    labels:
+#      traefik.backend: idcards
+#      traefik.frontend.rule: "Host:angular.docker.localhost"
+    depends_on:
+      - traefik
+    links:
+      - traefik
+    ports:
+      - 4200:4200
+    volumes:
+      - ./client:/app
 
   idcards:
 #    container_name: ag_idcards

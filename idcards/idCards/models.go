@@ -14,7 +14,7 @@ type UserModel struct {
 }
 
 
-func Details(u UserModel) (err error) {
+func Details(id int64) (u UserModel, err error) {
 	conn, err := db.ConnectSQL()
 
 	if err != nil {
@@ -22,15 +22,14 @@ func Details(u UserModel) (err error) {
 	}
 	defer conn.Close()
 
-	sentence := fmt.Sprintf("SELECT name FROM Users WHERE name='%v'", u.Name)
+	sentence := fmt.Sprintf("SELECT id, name, email FROM Users WHERE id='%v'", id)
 
 	fmt.Println(sentence)
-	res, err := conn.Query(sentence)
+	err = conn.QueryRow(sentence).Scan(&u.ID, &u.Name, &u.Email)
 	if err != nil {
 		return
 	}
 
-	fmt.Println(res)
 	return
 }
 
