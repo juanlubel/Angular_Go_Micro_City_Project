@@ -1,18 +1,18 @@
 package main
 
 import (
-	"idcards/db"
-	"idcards/idCards"
+	/* "idcards/db" */
 	_ "idcards/docs"
+	"idcards/idCards"
 
 	"fmt"
+	"os"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/files"
-	"github.com/swaggo/gin-swagger"
-	"os"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
-
 
 func main() {
 	//Ignore return
@@ -24,14 +24,14 @@ func main() {
 	//app.Use(favicon.New("./favicon.ico"))
 
 	// create table
-	err := db.CreateTable()
-	if err != nil {
+	/* err := db.CreateTable() */
+	/* 	if err != nil {
 		panic(err)
-	}
+	} */
 
 	app.Use(cors.Default())
-	//CORS 
-/*	app.Use(cors.New(cors.Config{
+	//CORS
+	/*	app.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "DELETE", "POST"},
 		AllowHeaders:     []string{"Origin"},
@@ -44,11 +44,10 @@ func main() {
 	}))*/
 
 	//Swagger
-	url := ginSwagger.URL("http://localhost"+port+"/swagger/doc.json") // The url pointing to API definition
+	url := ginSwagger.URL("http://localhost" + port + "/swagger/doc.json") // The url pointing to API definition
 	app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
 	v1 := app.Group("/api")
-
 
 	//plain.Route(v1)
 	//Load route greetings con /api => localhost:${port}/api/salute
@@ -58,8 +57,6 @@ func main() {
 	idCards.UsersList(v1.Group("/idCards"))
 
 	//Start server
-	fmt.Println("listen and serve on localhost "+port)
+	fmt.Println("listen and serve on localhost " + port)
 	_ = app.Run(port)
 }
-
-

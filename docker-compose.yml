@@ -1,18 +1,12 @@
 version: "3"
 
 services:
-
-  angular:
-#    container_name: client
+# Clients
+  client:
     build:
-      context: ./client
+      context: ./frontends/client
       dockerfile: Dockerfile
     restart: always
-#    env_file:
-#      - app-variables.env
-#    labels:
-#      traefik.backend: idcards
-#      traefik.frontend.rule: "Host:angular.docker.localhost"
     depends_on:
       - traefik
     links:
@@ -20,19 +14,19 @@ services:
     ports:
       - 4200:4200
     volumes:
-      - ./client:/app
+      - ./frontends/client:/app
 
+# Servers 
   idcards:
-#    container_name: ag_idcards
     build:
-      context: idcards
+      context: ./services/idcards
       dockerfile: Dockerfile
     image: app/idcards
     restart: always
     env_file:
       - app-variables.env
     volumes:
-      - ./idcards:/go/src/idcards
+      - ./services/idcards:/go/src/idcards
     labels:
       traefik.backend: idcards
       traefik.frontend.rule: "Host:idcards.docker.localhost"
@@ -43,6 +37,8 @@ services:
     links:
       - db
 
+
+# Services 
   traefik:
     image: traefik:v1.7
     ports:
@@ -53,7 +49,6 @@ services:
       - ./traefik/traefik.toml:/traefik.toml
 
   db:
-#    container_name: ag_mysql_db
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -63,7 +58,6 @@ services:
       - db.env
 
   adminer:
-#    container_name: ag_adminer
     image: adminer
     restart: always
     ports:

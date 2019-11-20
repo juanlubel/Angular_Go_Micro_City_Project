@@ -1,4 +1,4 @@
-FROM trion/ng-cli
+FROM node
 
 WORKDIR /app
 
