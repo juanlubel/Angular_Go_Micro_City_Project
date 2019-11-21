@@ -1,7 +1,7 @@
 package main
 
 import (
-	/* "idcards/db" */
+	 "idcards/db"
 	_ "idcards/docs"
 	"idcards/idCards"
 
@@ -19,15 +19,17 @@ func main() {
 
 	port := os.Getenv("GO_SERVER")
 	fmt.Println(port)
+
+
 	//Load app
 	app := gin.New()
 	//app.Use(favicon.New("./favicon.ico"))
 
 	// create table
-	/* err := db.CreateTable() */
-	/* 	if err != nil {
+	 err := db.CreateTable()
+	 	if err != nil {
 		panic(err)
-	} */
+	}
 
 	app.Use(cors.Default())
 	//CORS
