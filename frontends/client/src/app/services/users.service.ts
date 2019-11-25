@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpHeaders} from '@angular/common/http';
+import {ApiService} from './api.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 export class UsersService {
 
   constructor(
-    private http: HttpClient
+    private apiService: ApiService
   ) {
   }
 
@@ -17,8 +19,7 @@ export class UsersService {
     })
   }
 
-  get() {
-    return this.http.get('http://idcards.docker.localhost/api/idCards/')
-      .pipe()
+  getAll() {
+    return this.apiService.get('idCards').pipe();
   }
 }

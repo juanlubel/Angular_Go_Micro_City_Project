@@ -7,6 +7,8 @@ services:
       context: ./frontends/client
       dockerfile: Dockerfile
     restart: always
+    env_file:
+      - app-variables.env
     depends_on:
       - traefik
     links:
@@ -16,7 +18,7 @@ services:
     volumes:
       - ./frontends/client:/app
 
-# Servers 
+# Servers
   idcards:
     build:
       context: ./services/idcards
@@ -38,7 +40,7 @@ services:
       - db
 
 
-# Services 
+# Services
   traefik:
     image: traefik:v1.7
     ports:

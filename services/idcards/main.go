@@ -17,6 +17,8 @@ import (
 func main() {
 	//Ignore return
 
+
+
 	port := os.Getenv("GO_SERVER")
 	fmt.Println(port)
 
@@ -44,6 +46,7 @@ func main() {
 		},
 		MaxAge: 12 * time.Hour,
 	}))*/
+
 
 	//Swagger
 	url := ginSwagger.URL("http://localhost" + port + "/swagger/doc.json") // The url pointing to API definition
