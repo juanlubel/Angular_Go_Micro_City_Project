@@ -16,7 +16,7 @@ services:
     volumes:
       - ./frontends/client:/app
 
-# Servers 
+# Servers
   idcards:
     build:
       context: ./services/idcards
@@ -33,22 +33,39 @@ services:
     ports:
       - 3030:3030
     depends_on:
-      - db
+      - mysql
     links:
-      - db
+      - mysql
+
+  admin:
+    build:
+      context: ./services/admin
+      dockerfile: Dockerfile
+    image: app/admin
+    restart: always
+    env_file:
+      - app-variables.env
+    volumes:
+      - ./services/admin:/go/src/admin
+    labels:
+      traefik.backend: admin
+      traefik.enable: "true"
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:admin.docker.localhost"
 
 
-# Services 
+# Services
   traefik:
     image: traefik:v1.7
     ports:
-      - "80:80"
+      - "3010:80"
       - "5050:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik/traefik.toml:/traefik.toml
 
-  db:
+  mysql:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always

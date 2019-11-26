@@ -29,6 +29,8 @@ func main() {
 		panic(err)
 	} */
 
+
+
 	app.Use(cors.Default())
 	//CORS
 	/*	app.Use(cors.New(cors.Config{
