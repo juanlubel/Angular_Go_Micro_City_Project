@@ -1,0 +1,27 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+
+import { AppRoutingModule } from './app-routing.module';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
+import { HomeModule } from './home/home.module';
+
+
+import { AppComponent } from './app.component';
+import {NavComponent} from './public/layout'
+import {FooterComponent} from './public/layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+
+@NgModule({
+  declarations: [AppComponent,NavComponent,FooterComponent],//components
+  imports: [BrowserModule, AppRoutingModule,BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatIconModule,
+    HomeModule],//modules
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}

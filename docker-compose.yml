@@ -2,9 +2,9 @@ version: "3"
 
 services:
 # Clients
-  client:
+  bankandshops:
     build:
-      context: ./frontends/client
+      context: ./frontends/BankAndShops
       dockerfile: Dockerfile
     restart: always
     depends_on:
@@ -14,48 +14,81 @@ services:
     ports:
       - 4200:4200
     volumes:
-      - ./frontends/client:/app
+      - ./frontends/BankAndShops:/app
+#  client:
+#    build:
+#      context: ./frontends/client
+#      dockerfile: Dockerfile
+#    restart: always
+#    depends_on:
+#      - traefik
+#    links:
+#      - traefik
+#    ports:
+#      - 4200:4200
+#    volumes:
+#      - ./frontends/client:/app
 
-# Servers 
-  idcards:
+# Servers
+  bank:
     build:
-      context: ./services/idcards
+      context: ./services/bank
       dockerfile: Dockerfile
-    image: app/idcards
+    image: app/bank
     restart: always
     env_file:
       - app-variables.env
     volumes:
-      - ./services/idcards:/go/src/idcards
+      - ./services/bank:/go/src/bank
     labels:
-      traefik.backend: idcards
-      traefik.frontend.rule: "Host:idcards.docker.localhost"
-    ports:
-      - 3030:3030
-    depends_on:
-      - db
-    links:
-      - db
-
+      traefik.frontend.rule: "PathPrefix:/"
+      traefik.enable: "true"  
+      traefik.backend: "bank"
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:bank.localhost"
+#  idcards:
+#    build:
+#      context: ./services/idcards
+#      dockerfile: Dockerfile
+#    image: app/idcards
+#    restart: always
+#    env_file:
+#      - app-variables.env
+#    volumes:
+#      - ./services/idcards:/go/src/idcards
+#    labels:
+#      traefik.backend: idcards
+#      traefik.frontend.rule: "Host:idcards.docker.localhost"
+#    ports:
+#      - 3030:3030
+#    depends_on:
+#      - db
+#    links:
+#      - db
+ 
 
 # Services 
   traefik:
     image: traefik:v1.7
     ports:
-      - "80:80"
+      - "3010:80"
       - "5050:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik/traefik.toml:/traefik.toml
 
-  db:
+  mysql:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - 3306:3306
-    env_file:
-      - db.env
+    environment:
+      MYSQL_DATABASE: microcity
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: test
+    volumes:
+    - /mysql:/var/lib/mysql
 
   adminer:
     image: adminer
