@@ -6,7 +6,8 @@ import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {UsersComponent} from './users/users.component';
 import {UsersListComponent} from './users/users-list/users-list.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule} from '@angular/common/http';
+import {LoginModule} from './login/login.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    LoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

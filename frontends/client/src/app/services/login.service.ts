@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class LoginService {
 
   constructor(
     private http: HttpClient
@@ -15,10 +15,15 @@ export class UsersService {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
-  }
+  };
 
   get() {
     return this.http.get('http://idcards.docker.localhost/api/idCards/')
       .pipe();
   }
+  login(payload) {
+    return this.http.post('http://admin.docker.localhost/admin/login/', payload)
+      .pipe()
+  }
 }
+
