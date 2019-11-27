@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UsersService} from "../services/users.service";
+import {UsersService} from '../services/users.service';
 
 @Component({
   selector: 'app-users',
@@ -8,17 +8,18 @@ import {UsersService} from "../services/users.service";
 })
 export class UsersComponent implements OnInit {
 
-  title: string = "Hello Users"
-  dataParent: string[] = ["uno", "dos", "tres"]
-  hostedString: string
+  title = 'Hello Users';
+  dataParent: string[] = ['uno', 'dos', 'tres'];
+  hostedString: string;
 
   constructor(private usersService: UsersService) {
   }
 
   ngOnInit() {
-    console.log(this.usersService.get().subscribe((res: any) => {
-      console.log(res)
-    }))
+    this.usersService.getAll()
+      .subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
   eventListener(event) {

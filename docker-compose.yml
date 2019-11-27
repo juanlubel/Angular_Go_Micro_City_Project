@@ -7,6 +7,8 @@ services:
       context: ./frontends/client
       dockerfile: Dockerfile
     restart: always
+    env_file:
+      - app-variables.env
     depends_on:
       - traefik
     links:

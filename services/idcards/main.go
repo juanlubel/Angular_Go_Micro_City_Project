@@ -1,7 +1,7 @@
 package main
 
 import (
-	/* "idcards/db" */
+	 "idcards/db"
 	_ "idcards/docs"
 	"idcards/idCards"
 
@@ -17,17 +17,21 @@ import (
 func main() {
 	//Ignore return
 
+
+
 	port := os.Getenv("GO_SERVER")
 	fmt.Println(port)
+
+
 	//Load app
 	app := gin.New()
 	//app.Use(favicon.New("./favicon.ico"))
 
 	// create table
-	/* err := db.CreateTable() */
-	/* 	if err != nil {
+	 err := db.CreateTable()
+	 	if err != nil {
 		panic(err)
-	} */
+	}
 
 
 
@@ -44,6 +48,7 @@ func main() {
 		},
 		MaxAge: 12 * time.Hour,
 	}))*/
+
 
 	//Swagger
 	url := ginSwagger.URL("http://localhost" + port + "/swagger/doc.json") // The url pointing to API definition

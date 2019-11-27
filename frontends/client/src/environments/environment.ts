@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  idCards: 'http://idcards.docker.localhost/api/idCards/',
+  admin: 'http://idcards.docker.localhost/admin/'
 };
 
 /*
