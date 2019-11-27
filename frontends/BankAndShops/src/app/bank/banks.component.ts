@@ -1,41 +1,38 @@
-import { Component, Directive, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Banks } from '../core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { Banks, BankService } from '../core';
+import { FormBuilder, FormGroup, Validators } from  '@angular/forms';
 
 @Component({
   selector: 'app-banks',
   templateUrl: `banks.html`,
-  styles: []
+  styleUrls: ['bank.css']
 })
 export class BanksComponent implements OnInit{
-  banks: Banks;
-  contactForm: FormGroup
+  banks: Banks[];
+  bankForm: FormGroup;
 
-  // Step 1
-  createFormGroup() {
-    return new FormGroup({
-      personalData: new FormGroup({
-        email: new FormControl(),
-        mobile: new FormControl(),
-        country: new FormControl(),
-      }),
-      requestType: new FormControl(),
-      text: new FormControl(),
-    })
-  }
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder) {
-    this.contactForm = this.createFormGroup();
+  constructor(
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private _http: BankService){
   }
 
   ngOnInit(){
     this.route.data.subscribe(
-      (data: { banks: Banks }) => {
+      (data: { banks: Banks[] }) => {
         this.banks = data.banks;
       }) 
       console.log(this.banks)
+      this.bankForm  =  this.formBuilder.group({
+        BankName: ['', Validators.required]
+    });
   }
-  
+  createBank(){
+    console.log(this.bankForm.value);
+    this._http.addBank(this.bankForm.value).subscribe(
+      result => {console.log(result); this.banks.push(result["bank"]); console.log(this.banks);})
+  }
 
 
 }

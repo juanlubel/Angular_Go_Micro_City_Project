@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
 import { HomeModule } from './home/home.module';
 import {CoreModule} from './core/core.module'
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 import { AppComponent } from './app.component';
 import {NavComponent} from './public/layout'
@@ -25,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomeModule,
     CoreModule,
     HttpClientModule,
-    ReactiveFormsModule],//modules
+   ],//modules
   providers: [],
   bootstrap: [AppComponent]
 })

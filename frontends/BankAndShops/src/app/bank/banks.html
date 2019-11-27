@@ -6,4 +6,20 @@
     </li>
   </ul>
 
+  <div class="create_bank">
+  <h2 class="create_bank-header">Create Bank</h2>
+  <form [formGroup]="bankForm" class="create_bank-container" (ngSubmit)="createBank()">
 
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.BankName.errors }">
+      <input type="text" placeholder="Name" formControlName="BankName">
+    </p>
+
+    <div *ngIf="isSubmitted && formControls.BankName.errors" class="help-block">
+      <div *ngIf="formControls.BankName.errors.required">Name is required</div>
+    </div>
+
+    <p>
+      <input type="submit" value="Create">
+    </p>
+  </form>
+</div>

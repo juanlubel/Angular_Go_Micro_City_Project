@@ -14,11 +14,12 @@ export class BankService {
     return  throwError(error.error);
   }
 
-  getAll(): Observable<[any]> {
+  getAll(): Observable<[Banks]> {
     return this.apiService.get('banks')
           .pipe(map(data => data.banks));
   }
-  addBank (bank: Banks): Observable<Banks> {
+  addBank (bank:Banks): Observable<Banks> {
+    console.log(bank)
     return this.apiService.post('banks', bank)
       .pipe(
         catchError(this.formatErrors)

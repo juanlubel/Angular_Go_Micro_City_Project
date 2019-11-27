@@ -7,7 +7,7 @@ import { BankModule } from '../bank';
 
 
 @NgModule({
-  imports: [ HomeRoutingModule,BankModule],
+  imports: [ HomeRoutingModule,/* BankModule */],
   declarations: [HomeComponent]
 })
 export class HomeModule {}

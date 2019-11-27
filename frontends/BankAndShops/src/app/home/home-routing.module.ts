@@ -6,9 +6,9 @@ import { BankResolver } from '../bank';
 
 
 const routes: Routes = [
-    { path: "", component: HomeComponent,  resolve: {
+    { path: "", component: HomeComponent,  /* resolve: {
         banks: BankResolver
-      }},
+      } */},
 
 ];
 
