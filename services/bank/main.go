@@ -3,6 +3,7 @@ package main
 import (
 	"Go_Gingonic_Server/bank"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -33,6 +34,17 @@ func main() {
 	bankAPI := initBankAPI(db) //illectamos todas las dependencias que necesitamos con wire.
 
 	r := gin.Default() //creamos el router
+	// same as
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://bank.localhost:3010"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "http://localhost:4200"
+		},
+	}))
 
 	//creamos las rutas y anexamos el capturador el cual se encontrara en <nombre>API
 	r.GET("/banks", bankAPI.FindAll)
