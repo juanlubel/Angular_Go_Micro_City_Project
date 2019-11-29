@@ -20,6 +20,7 @@ func ToFullAccountDTO(bankAccount BankAccount) FullAccountDTO {
 	}
 }
 
+/*ToLoggedUserDTO : mapper to gorm struct to single object DTO */
 func ToLoggedUserDTO(bankAccount BankAccount, token string) LoggedUserDTO {
 	return LoggedUserDTO{
 		Owner: bankAccount.Owner,

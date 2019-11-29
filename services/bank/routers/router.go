@@ -23,6 +23,7 @@ func MakePublicAccountsRoutes(r *gin.Engine, db *gorm.DB, jwt *utils.JWT) {
 	/* v1.Use() */
 	r.GET("/accounts", accountAPI.FindAll)
 	r.GET("/account/:name", accountAPI.FindByOwner)
+	r.Use(JWTAuthMiddleware(true, utils.Secret))
 	r.POST("/account", accountAPI.Create)
 	r.POST("/account/login", accountAPI.LogIn)
 	/* 	r.PUT("/account/:name", accountAPI.Update)
