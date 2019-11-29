@@ -3,15 +3,13 @@
 //go:generate wire
 //+build !wireinject
 
-package main
+package router
 
 import (
+	"Go_Gingonic_Server/accounts"
 	"Go_Gingonic_Server/bank"
+	"Go_Gingonic_Server/utils"
 	"github.com/jinzhu/gorm"
-)
-
-import (
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 // Injectors from wire.go:
@@ -21,4 +19,11 @@ func initBankAPI(db *gorm.DB) bank.BankAPI {
 	bankService := bank.ProvideBankService(bankRepository)
 	bankAPI := bank.ProvideBankAPI(bankService)
 	return bankAPI
+}
+
+func initAccountsAPI(db *gorm.DB, jwt *utils.JWT) accounts.AccountAPI {
+	accountsRepository := accounts.ProvideAccountsRepostiory(db)
+	accountService := accounts.ProvideAccountService(accountsRepository)
+	accountAPI := accounts.ProvideAccountAPI(accountService, jwt)
+	return accountAPI
 }

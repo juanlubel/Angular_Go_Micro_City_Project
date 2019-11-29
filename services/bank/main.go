@@ -1,7 +1,10 @@
 package main
 
 import (
+	"Go_Gingonic_Server/accounts"
 	"Go_Gingonic_Server/bank"
+	router "Go_Gingonic_Server/routers"
+	"Go_Gingonic_Server/utils"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -22,7 +25,7 @@ func initDB() *gorm.DB { //Gorm Abre la conexion a base de datos
 		panic(err)
 	}
 
-	db.AutoMigrate(&bank.Bank{}) //genera las tablas dependiendo de los modelos que le pasemos
+	db.AutoMigrate(&bank.Bank{}, &accounts.BankAccount{}) //genera las tablas dependiendo de los modelos que le pasemos
 
 	return db
 }
@@ -31,10 +34,7 @@ func main() {
 	db := initDB()   //abrimos la conexion a base de datos
 	defer db.Close() //a cerramos
 
-	bankAPI := initBankAPI(db) //illectamos todas las dependencias que necesitamos con wire.
-
 	r := gin.Default() //creamos el router
-	// same as
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://bank.localhost:3010"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
@@ -45,13 +45,9 @@ func main() {
 			return origin == "http://localhost:4200"
 		},
 	}))
-
-	//creamos las rutas y anexamos el capturador el cual se encontrara en <nombre>API
-	r.GET("/banks", bankAPI.FindAll)
-	r.GET("/banks/:id", bankAPI.FindByID)
-	r.POST("/banks", bankAPI.Create)
-	r.PUT("/banks/:id", bankAPI.Update)
-	r.DELETE("/banks/:id", bankAPI.Delete)
+	jwt := utils.JWT{}
+	router.MakePublicBankRoutes(r, db)
+	router.MakePublicAccountsRoutes(r, db, &jwt)
 
 	err := r.Run(":3010") //arrancamos el servidor por el puerto indicado
 	if err != nil {
