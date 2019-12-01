@@ -3,6 +3,7 @@ module Go_Gingonic_Server
 go 1.13
 
 require (
+	github.com/danilopolani/gocialite v1.0.2
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.4.0
@@ -19,4 +20,5 @@ require (
 	github.com/pilu/fresh v0.0.0-20190826141211-0fa698148017
 	golang.org/x/sys v0.0.0-20191018095205-727590c5006e
 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22
+	gopkg.in/oleiade/reflections.v1 v1.0.0 // indirect
 )

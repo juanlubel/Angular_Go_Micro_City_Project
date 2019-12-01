@@ -47,6 +47,7 @@ func main() {
 	}))
 	jwt := utils.JWT{}
 	router.MakePublicBankRoutes(r, db)
+	router.MakeAuthRoutes(r, db)
 	router.MakePublicAccountsRoutes(r, db, &jwt)
 
 	err := r.Run(":3010") //arrancamos el servidor por el puerto indicado

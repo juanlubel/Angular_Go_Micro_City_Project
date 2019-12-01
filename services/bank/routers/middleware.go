@@ -3,9 +3,16 @@ package router
 import (
 	"strings"
 
+	"fmt"
+	"net/http"
+
 	jwt "github.com/dgrijalva/jwt-go"
+
+	"github.com/danilopolani/gocialite"
 	"github.com/gin-gonic/gin"
 )
+
+var gocial = gocialite.NewDispatcher()
 
 // APIError struct
 type APIError struct {
@@ -20,14 +27,16 @@ func RespondWithError(code int, message string, c *gin.Context) {
 }
 
 // JWTAuthMiddleware middleware function implementation
-func JWTAuthMiddleware(encoded bool, secret string) gin.HandlerFunc {
+func JWTAuthMiddleware(checkauth bool, secret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		auth := c.GetHeader("Authorization")
 		parts := strings.Fields(auth)
 
 		// Token base validation
 		if auth == "" {
-			RespondWithError(401, "API token required", c)
+			if checkauth {
+				RespondWithError(401, "API token required", c)
+			}
 			return
 		}
 
@@ -56,4 +65,73 @@ func JWTAuthMiddleware(encoded bool, secret string) gin.HandlerFunc {
 		}
 
 	}
+}
+
+// Redirect to correct oAuth URL
+func redirectHandler(c *gin.Context) {
+	// Retrieve provider from route
+	provider := c.Param("provider")
+
+	// In this case we use a map to store our secrets, but you can use dotenv or your framework configuration
+	// for example, in revel you could use revel.Config.StringDefault(provider + "_clientID", "") etc.
+	providerSecrets := map[string]map[string]string{
+		"github": {
+			"clientID":     "d002b78dcf0097f64df3",
+			"clientSecret": "ab0fe9b6ee7a75399dd1ff9b7a5da16b4b051700",
+			"redirectURL":  "http://bank.localhost:3010/auth/github/callback",
+		},
+		/* 		"google": {
+			"clientID":     "xxxxxxxxxxxxxx",
+			"clientSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+			"redirectURL":  "http://localhost:9090/auth/google/callback",
+		}, */
+	}
+
+	providerScopes := map[string][]string{
+		"github": []string{"public_repo"},
+		/* "google": []string{}, */
+
+	}
+
+	providerData := providerSecrets[provider]
+	actualScopes := providerScopes[provider]
+	authURL, err := gocial.New().
+		Driver(provider).
+		Scopes(actualScopes).
+		Redirect(
+			providerData["clientID"],
+			providerData["clientSecret"],
+			providerData["redirectURL"],
+		)
+
+	// Check for errors (usually driver not valid)
+	if err != nil {
+		c.Writer.Write([]byte("Error: " + err.Error()))
+		return
+	}
+
+	// Redirect with authURL
+	c.Redirect(http.StatusFound, authURL)
+}
+
+// Handle callback of provider
+func callbackHandler(c *gin.Context) {
+	// Retrieve query params for state and code
+	state := c.Query("state")
+	code := c.Query("code")
+	/* provider := c.Param("provider") */
+
+	// Handle callback and check for errors
+	user, token, err := gocial.Handle(state, code)
+	if err != nil {
+		c.Writer.Write([]byte("Error: " + err.Error()))
+		return
+	}
+
+	// Print in terminal user information
+	fmt.Printf("%#v", token)
+	fmt.Printf("%#v", user)
+
+	// If no errors, show provider name
+	c.Writer.Write([]byte("Hi, " + user.FullName))
 }
