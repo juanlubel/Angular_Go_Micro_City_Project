@@ -2,7 +2,9 @@ package idCards
 
 import (
 	"fmt"
+	"github.com/bariseser/Go-Seeder"
 	"github.com/gin-gonic/gin"
+	"github.com/gosimple/slug"
 	"strconv"
 )
 
@@ -17,19 +19,22 @@ func UsersList(router *gin.RouterGroup) {
 	router.GET("/", getAllUsers)
 }
 
+func UsersSeed(router *gin.RouterGroup) {
+	router.GET("/", createRows)
+}
+
 func createIdCard(c *gin.Context) {
 	fmt.Print("Creating")
 	user := UserModel{}
 	c.BindJSON(&user)
-	id, err := Create(user)
+	user.Slug = slug.Make(user.Name +" "+ user.Surname)
+	newUser, err := Create(user)
 	if err != nil {
 		fmt.Print(err)
 		c.JSON(409, gin.H{"error": err, "user": user})
 		return
 	}
-	user.ID = id
-
-	c.JSON(201, gin.H{"user": user})
+	c.JSON(201, gin.H{"user": ToUsersDTO(newUser)})
 	return
 }
 func getIdCard(c *gin.Context) {
@@ -43,7 +48,7 @@ func getIdCard(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"msg": user})
+	c.JSON(200, gin.H{"user": ToUsersDTO(user)})
 
 }
 func deleteIdCard(c *gin.Context) {
@@ -54,31 +59,53 @@ func deleteIdCard(c *gin.Context) {
 	err := Delete(user)
 	if err != nil {
 		fmt.Print(err)
-		c.JSON(409, gin.H{"error": err, "user": user})
+		c.JSON(409, gin.H{"error": err, "user": ToUsersDTO(user)})
 		return
 	}
 
-	c.JSON(200, gin.H{"msg": user})
+	c.JSON(200, gin.H{"user": user})
 }
 func updateIdCard(c *gin.Context) {
 	fmt.Print("Update")
 	fmt.Println(c.Param("id"))
 	user := UserModel{}
 	c.BindJSON(&user)
+	//no esta terminado, no updatea parametros según peticion del usuario.
 	user.Name = c.Param("id")
 	err := Update(user)
 	if err != nil {
 		fmt.Print(err)
-		c.JSON(409, gin.H{"error": err, "user": user})
+		c.JSON(409, gin.H{"error": err, "user": ToUsersDTO(user)})
 		return
 	}
 
-	c.JSON(200, gin.H{"msg": user})
+	c.JSON(200, gin.H{"user": ToUsersDTO(user)})
 }
 
 func getAllUsers(c *gin.Context) {
+	fmt.Print("List All")
 	res, err := ListAll()
-	fmt.Println("List", res)
 	c.JSON(200, gin.H{	"list": res,
 						"error": err})
+}
+
+
+func createRows(c *gin.Context) {
+	n := 0
+	for n <= 100 {
+		surname := seeder.Name()
+		name := seeder.FirstNameMale()
+		slugify := slug.Make(name +" "+ surname)
+		email :=  slugify + "@gmail.com"
+		u := UserModel{
+			Name:   	name,
+			Surname: 	surname,
+			Slug:		slugify,
+			Email:  	email,
+			Pass:  		surname,
+		}
+		Create(u)
+		n++
+	}
+
 }

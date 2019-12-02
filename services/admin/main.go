@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -41,16 +43,34 @@ func main() {
 
 	v1 := r.Group("/")
 
+	//CORS
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://admin.docker.localhost:3010"},
+		AllowMethods:     []string{"PUT", "GET", "DELETE", "POST"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "http://localhost:4200"
+		},
+	}))
+/*	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:4200/"}*/
+	// config.AllowOrigins == []string{"http://google.com", "http://facebook.com"}
+
+	//r.Use(cors.New(config))
+
+
 	//creamos las rutas y anexamos el capturador el cual se encontrara en <nombre>API
 	//r.Use()
-	v1.Use(admin.AuthMiddleware(true))
+	//v1.Use(admin.AuthMiddleware(true))
 
 	v1.GET("/admin/:id", adminApi.FindByID)
 	v1.POST("/admin", adminApi.Create)
 	v1.PUT("/admin/:id", adminApi.Update)
 	v1.DELETE("/admin/:id", adminApi.Delete)
 
-	v1.Use(admin.AuthMiddleware(false))
+	//v1.Use(admin.AuthMiddleware(false))
 	v1.POST("/admin/login", adminApi.LogIn)
 
 	err := r.Run(":3010") //arrancamos el servidor por el puerto indicado

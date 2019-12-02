@@ -68,7 +68,16 @@
         "name": {
           "type": "string"
         },
+        "surname": {
+          "type": "string"
+        },
         "email": {
+          "type": "string"
+        },
+        "nCard": {
+          "type": "integer"
+        },
+        "pass": {
           "type": "string"
         }
       }

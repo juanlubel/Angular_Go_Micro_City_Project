@@ -2,6 +2,7 @@ package admin
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -23,6 +24,8 @@ func ProvideAdminApi(p Service) Api {
 }
 
 func (p *Api) LogIn(c *gin.Context) {
+	//c.Header("Content-Type", "application/json; charset=utf-8")
+	//fmt.Println("hola login")
 	var LogInAdminDTO LogInAdminDTO
 	err := c.BindJSON(&LogInAdminDTO)
 	if err != nil {
@@ -33,6 +36,7 @@ func (p *Api) LogIn(c *gin.Context) {
 	name := LogInAdminDTO.Name
 	pass := LogInAdminDTO.Pass
 	admin := p.Service.FindByName(&Admin{Name:name})
+	//fmt.Print(admin)
 	if admin == (Admin{}) {
 		c.JSON(http.StatusNotFound, gin.H{"login": "Invalid username"})
 		return
@@ -43,7 +47,14 @@ func (p *Api) LogIn(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"admin": ToLoggedAdminDTO(admin)})
+	token, err := common.GenerateJWT(LogInAdminDTO.Name)
+	if err != nil {
+		log.Fatalln(err)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+	//fmt.Printf(token)
+	c.JSON(http.StatusOK, gin.H{"admin":ToLoggedAdminDTO(admin, token)})
 
 }
 
@@ -51,8 +62,10 @@ func (p *Api) LogIn(c *gin.Context) {
 //FindByID :  The method to obtain specific data
 func (p *Api) FindByID(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	admin := p.Service.FindByID(uint(id))
 
+	fmt.Println(id)
+	admin := p.Service.FindByID(uint(id))
+	fmt.Println(admin)
 	c.JSON(http.StatusOK, gin.H{"admin": ToAdminDTO(admin)})
 }
 
@@ -73,7 +86,7 @@ func (p *Api) Create(c *gin.Context) {
 		return
 	}
 
-	adminDTO.Token, err = common.GenerateJWT(adminDTO.Name)
+	token, err := common.GenerateJWT(adminDTO.Name)
 	if err != nil {
 		log.Fatalln(err)
 		c.Status(http.StatusBadRequest)
@@ -82,7 +95,7 @@ func (p *Api) Create(c *gin.Context) {
 
 	createdProduct := p.Service.Save(ToAdmin(adminDTO))
 	//fmt.Println(createdProduct)
-	c.JSON(http.StatusOK, gin.H{"admin": ToLoggedAdminDTO(createdProduct)})
+	c.JSON(http.StatusOK, gin.H{"admin": ToLoggedAdminDTO(createdProduct, token)})
 }
 
 // Update :  Updates an specific content of the table

@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 
@@ -28,7 +29,7 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		id, err := common.ParseJWT(c.Request.Header.Get(key))
-
+		fmt.Printf(id)
 		if err != nil {
 			if auto401 {
 				c.AbortWithError(http.StatusUnauthorized, err)

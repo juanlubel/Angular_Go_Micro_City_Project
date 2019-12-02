@@ -17,8 +17,6 @@ import (
 func main() {
 	//Ignore return
 
-
-
 	port := os.Getenv("GO_SERVER")
 	fmt.Println(port)
 
@@ -32,8 +30,7 @@ func main() {
 	 	if err != nil {
 		panic(err)
 	}
-
-
+	
 
 	app.Use(cors.Default())
 	//CORS
@@ -62,6 +59,7 @@ func main() {
 
 	idCards.UserRegister(v1.Group("/idCard"))
 	idCards.UsersList(v1.Group("/idCards"))
+	idCards.UsersSeed(v1.Group("/seeder"))
 
 	//Start server
 	fmt.Println("listen and serve on localhost " + port)

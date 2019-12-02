@@ -18,5 +18,13 @@
     "pathRewrite": {
       "^/api_idCard/": ""
     }
+  },
+  "/admin/*": {
+    "target": "http://admin.docker.localhost/",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/admin/": ""
+    }
   }
 }

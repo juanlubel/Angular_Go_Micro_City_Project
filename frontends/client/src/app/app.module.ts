@@ -5,8 +5,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {HttpClientModule} from '@angular/common/http';
-
-import {LoginModule} from './login/login.module';
+import {HomeModule} from './home/home.module';
+import {CoreModule} from './core';
 
 @NgModule({
   declarations: [
@@ -17,9 +17,12 @@ import {LoginModule} from './login/login.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    LoginModule
+    CoreModule,
+    HomeModule
+    // BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

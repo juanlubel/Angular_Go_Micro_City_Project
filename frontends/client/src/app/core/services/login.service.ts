@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {ApiService} from "./api.service";
+import {ApiService} from './api.service';
+import {Observable} from 'rxjs';
+import {Admin} from '../../models';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +20,12 @@ export class LoginService {
       'Content-Type': 'application/json'
     })
   }
-  login() {
-    return this.apiService.post('admin').pipe();
+  login(params: object): Observable<Admin> {
+    return this.apiService.login('admin', params).pipe();
 
+  }
+  get() {
+    return this.apiService.get('admin').pipe();
   }
 }
 

@@ -7,5 +7,4 @@ type Admin struct {
 	gorm.Model
 	Name  string
 	Pass string
-	Token string
 }

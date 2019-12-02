@@ -1,0 +1,36 @@
+<div class="home_container">
+  <div class="adminLogin">
+    <p>Admin Login</p>
+    <form class="example-form" action="">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <label>
+          <input matInput placeholder="UserName" value="" #adminName>
+        </label>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <label>
+          <input matInput placeholder="Password" value="" #adminPassword>
+        </label>
+      </mat-form-field>
+      <a mat-button (click)="login(adminName.value, adminPassword.value)">Click me!</a>
+    </form>
+  </div>
+  <div class="userLogin">
+    <p>User Login</p>
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <label>
+          <input matInput placeholder="UserName" value="" >
+        </label>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="fill">
+        <label>
+          <input matInput placeholder="Password" value="">
+        </label>
+      </mat-form-field>
+      <a mat-button label="Apretame!">Click me!</a>
+    </form>
+  </div>
+</div>
