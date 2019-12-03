@@ -29,9 +29,10 @@ func MakePublicAccountsRoutes(r *gin.Engine, db *gorm.DB, jwt *utils.JWT) {
 	r.Use(JWTAuthMiddleware(false, utils.Secret))
 	r.GET("/accounts", accountAPI.FindAll)
 	r.GET("/account/:name", accountAPI.FindByOwner)
+	r.POST("/account/login", accountAPI.LogIn)
 	r.Use(JWTAuthMiddleware(true, utils.Secret))
 	r.POST("/account", accountAPI.Create)
-	r.POST("/account/login", accountAPI.LogIn)
+	
 	/* 	r.PUT("/account/:name", accountAPI.Update)
 	   	r.DELETE("/account/:name", accountAPI.Delete) */
 }

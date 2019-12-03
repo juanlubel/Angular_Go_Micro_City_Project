@@ -46,7 +46,7 @@ func (p *AccountAPI) LogIn(c *gin.Context) {
 		return
 	} */
 
-	c.JSON(http.StatusOK, gin.H{"admin": ToLoggedUserDTO(account, token)})
+	c.JSON(http.StatusOK, gin.H{"user": ToLoggedUserDTO(account, token)})
 }
 
 /* Simple Crud Opperations */

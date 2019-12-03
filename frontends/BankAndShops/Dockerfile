@@ -9,6 +9,6 @@ RUN npm install -g @angular/cli
 
 COPY . .
 
-EXPOSE 4200
+EXPOSE 4500
 
 CMD sleep 5 && npm start

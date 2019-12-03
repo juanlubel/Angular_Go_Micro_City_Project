@@ -25,4 +25,11 @@ export class BankService {
         catchError(this.formatErrors)
       );
   }
+  login_bank (bank:Banks): Observable<any> {
+    console.log(bank)
+    return this.apiService.post('account/login', bank)
+      .pipe(
+        catchError(this.formatErrors)
+      );
+  }
 }

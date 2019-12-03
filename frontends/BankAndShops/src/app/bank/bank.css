@@ -70,6 +70,15 @@
   color: #fff;
   cursor: pointer;
 }
+.login_bank {
+  background: rgb(1, 29, 51);
+  border-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+.login_bank:hover {
+  background: #17c;
+}
 
 .create_bank input[type="submit"]:hover {
   background: #17c;

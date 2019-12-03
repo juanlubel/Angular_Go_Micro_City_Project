@@ -42,7 +42,7 @@ func main() {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:4200"
+			return origin == "http://localhost:4500"
 		},
 	}))
 	jwt := utils.JWT{}

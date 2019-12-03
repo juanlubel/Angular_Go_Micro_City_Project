@@ -1,12 +1,13 @@
 
 <h1>Tome la lista de bancos</h1>
 <ul>
-    <li *ngFor="let bank of banks">
-      {{ bank.BankName }}
-    </li>
-  </ul>
+  <li *ngFor="let bank of banks">
+    {{ bank.BankName }} <input type="button" class="login_bank" value="Login">
+  </li>
+</ul>
+<!-- 
 
-  <div class="create_bank">
+<div class="create_bank">
   <h2 class="create_bank-header">Create Bank</h2>
   <form [formGroup]="bankForm" class="create_bank-container" (ngSubmit)="createBank()">
 
@@ -20,6 +21,27 @@
 
     <p>
       <input type="submit" value="Create">
+    </p>
+  </form>
+</div> -->
+<div class="create_bank">
+  <h2 class="create_bank-header">Login</h2>
+  <form [formGroup]="bankForm" class="create_bank-container" (ngSubmit)="login_bank()">
+
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.Bank.errors }">
+      <input type="text" placeholder="Bank Name" formControlName="Bank">
+    </p>
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.AccountNumber.errors }">
+      <input type="text" placeholder="Account Number" formControlName="AccountNumber">
+    </p>
+    <p [ngClass]="{ 'has-error': isSubmitted && formControls.Owner.errors }">
+      <input type="text" placeholder="Name" formControlName="Owner">
+    </p>
+
+
+
+    <p>
+      <input type="submit" value="Login">
     </p>
   </form>
 </div>
