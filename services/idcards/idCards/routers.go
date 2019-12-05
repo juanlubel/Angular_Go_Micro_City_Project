@@ -15,12 +15,21 @@ func UserRegister(router *gin.RouterGroup) {
 	router.PUT("/:id", updateIdCard)
 }
 
+func UserLogin(router *gin.RouterGroup) {
+	router.POST("", loginIdCard)
+}
+
 func UsersList(router *gin.RouterGroup) {
 	router.GET("/", getAllUsers)
 }
 
 func UsersSeed(router *gin.RouterGroup) {
 	router.GET("/", createRows)
+}
+
+func loginIdCard(c *gin.Context) {
+	fmt.Print("Login")
+	c.JSON(200, gin.H{"user": "login"})
 }
 
 func createIdCard(c *gin.Context) {

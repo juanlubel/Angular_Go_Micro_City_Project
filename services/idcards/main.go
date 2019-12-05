@@ -60,6 +60,7 @@ func main() {
 	idCards.UserRegister(v1.Group("/idCard"))
 	idCards.UsersList(v1.Group("/idCards"))
 	idCards.UsersSeed(v1.Group("/seeder"))
+	idCards.UserLogin(v1.Group("/idCards/login"))
 
 	//Start server
 	fmt.Println("listen and serve on localhost " + port)

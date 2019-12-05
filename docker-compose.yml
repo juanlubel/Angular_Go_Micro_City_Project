@@ -45,6 +45,8 @@ services:
       dockerfile: Dockerfile
     image: app/admin
     restart: always
+    ports:
+    - 3310:3010
     env_file:
       - app-variables.env
     volumes:
@@ -53,13 +55,14 @@ services:
       traefik.backend: admin
       traefik.enable: "true"
       traefik.port: "3010"
-      traefik.frontend.entryPoints: "http"
+      traefik.frontend.entryPoints: "http, ws"
       traefik.frontend.rule: "Host:admin.docker.localhost"
+      traefik.wss.protocol: "http"
 
 
-# Services
+  # Services
   traefik:
-    image: traefik:v1.7
+    image: traefik:v1.6
     ports:
       - "3010:80"
       - "5050:8080"

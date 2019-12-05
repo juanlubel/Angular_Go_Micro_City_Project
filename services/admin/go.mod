@@ -9,6 +9,7 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/google/wire v0.3.0
 	github.com/gorilla/mux v1.7.3
+	github.com/gorilla/websocket v1.4.1
 	github.com/howeyc/fsnotify v0.9.1-0.20151003194602-f0c08ee9c607
 	github.com/jinzhu/gorm v1.9.10
 	github.com/joho/godotenv v1.3.1-0.20190204044109-5c0e6c6ab1a0

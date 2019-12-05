@@ -4,7 +4,7 @@ package admin
 type AdminDTO struct {
 	ID    uint   `json:"id,string,omitempty"`
 	Name  string `json:"name"`
-	Pass  string   `json:"pass"`
+	Pass  string  `json:"pass"`
 	Token string `json:"token"`
 }
 

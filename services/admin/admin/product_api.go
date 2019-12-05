@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/gorilla/websocket"
 	"golang.org/x/crypto/bcrypt"
 
 	"Go_Gingonic_Server/common"
@@ -23,9 +24,32 @@ func ProvideAdminApi(p Service) Api {
 	return Api{Service: p}
 }
 
+//func (p *Api) WSHandler(c *gin.Context) {
+//	WS(c.Writer, c.Request)
+//
+//}
+//
+//func WS (res http.ResponseWriter, req *http.Request) {
+//	conn, err := (&websocket.Upgrader{CheckOrigin: func(r *http.Request) bool { return true }}).Upgrade(res, req, nil)
+//	if err != nil {
+//		fmt.Println("Failed to set websocket upgrade: %+v", err)
+//		return
+//	}
+//
+//	for {
+//		t, msg, err := conn.ReadMessage()
+//		fmt.Println(t, msg, err)
+//		if err != nil {
+//			break
+//		}
+//		conn.WriteMessage(t, msg)
+//	}
+//
+//	//conn.WriteMessage(_ ,admin)
+//}
+
 func (p *Api) LogIn(c *gin.Context) {
-	//c.Header("Content-Type", "application/json; charset=utf-8")
-	//fmt.Println("hola login")
+	c.Header("Content-Type", "application/json; charset=utf-8")
 	var LogInAdminDTO LogInAdminDTO
 	err := c.BindJSON(&LogInAdminDTO)
 	if err != nil {
@@ -36,7 +60,6 @@ func (p *Api) LogIn(c *gin.Context) {
 	name := LogInAdminDTO.Name
 	pass := LogInAdminDTO.Pass
 	admin := p.Service.FindByName(&Admin{Name:name})
-	//fmt.Print(admin)
 	if admin == (Admin{}) {
 		c.JSON(http.StatusNotFound, gin.H{"login": "Invalid username"})
 		return
@@ -53,10 +76,9 @@ func (p *Api) LogIn(c *gin.Context) {
 		c.Status(http.StatusBadRequest)
 		return
 	}
-	//fmt.Printf(token)
 	c.JSON(http.StatusOK, gin.H{"admin":ToLoggedAdminDTO(admin, token)})
-
 }
+
 
 
 //FindByID :  The method to obtain specific data

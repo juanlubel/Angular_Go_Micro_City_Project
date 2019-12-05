@@ -2,12 +2,10 @@ package main
 
 import (
 	"os"
-
-
-	"github.com/gin-contrib/cors"
+	//"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	//"github.com/jinzhu/gorm/dialects/mysql"
 
 	"Go_Gingonic_Server/admin"
 )
@@ -41,31 +39,15 @@ func main() {
 
 	r := gin.Default() //creamos el router
 
+	//CORS
+	makeRoutes(r)
 	v1 := r.Group("/")
 
-	//CORS
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://admin.docker.localhost:3010"},
-		AllowMethods:     []string{"PUT", "GET", "DELETE", "POST"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:4200"
-		},
-	}))
-/*	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:4200/"}*/
-	// config.AllowOrigins == []string{"http://google.com", "http://facebook.com"}
-
-	//r.Use(cors.New(config))
 
 
-	//creamos las rutas y anexamos el capturador el cual se encontrara en <nombre>API
-	//r.Use()
-	//v1.Use(admin.AuthMiddleware(true))
 
 	v1.GET("/admin/:id", adminApi.FindByID)
+	//v1.GET("/ws", adminApi.WSHandler)
 	v1.POST("/admin", adminApi.Create)
 	v1.PUT("/admin/:id", adminApi.Update)
 	v1.DELETE("/admin/:id", adminApi.Delete)
@@ -73,8 +55,32 @@ func main() {
 	//v1.Use(admin.AuthMiddleware(false))
 	v1.POST("/admin/login", adminApi.LogIn)
 
+
 	err := r.Run(":3010") //arrancamos el servidor por el puerto indicado
 	if err != nil {
 		panic(err)
 	}
+}
+
+func makeRoutes(r *gin.Engine) {
+	cors := func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "*")
+		c.Writer.Header().Set("Content-Type", "application/json")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+		}
+		c.Next()
+
+		/*
+			fmt.Printf("c.Request.Method \n")
+			fmt.Printf(c.Request.Method)
+			fmt.Printf("c.Request.RequestURI \n")
+			fmt.Printf(c.Request.RequestURI)
+		*/
+	}
+	r.Use(cors)
 }

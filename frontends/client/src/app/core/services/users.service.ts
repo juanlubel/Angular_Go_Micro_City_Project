@@ -23,4 +23,10 @@ export class UsersService {
     return this.apiService.get('idCards').pipe();
 
   }
+  login() {
+    return this.apiService.login('idCards', {
+      name: 'admin',
+      pass: 'admin'
+    }).pipe();
+  }
 }

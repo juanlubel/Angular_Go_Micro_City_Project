@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../core/services';
+import {ApiService} from '../core/services';
+import {Admin} from '../models';
+import {map} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-home',
@@ -7,24 +10,33 @@ import {LoginService} from '../core/services';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private token: any;
+  private res: any;
+
 
   constructor(
-    private userService: LoginService
-  ) { }
+    // private socketService: SocketService,
+    private apiService: ApiService
+  ) {
+
+  }
 
   ngOnInit() {
+
   }
 
   login(a: string, b: string) {
-    console.log(a, b);
     const params = {
       name: a,
       pass: b
     };
-    this.userService.login(params).subscribe(res => {
-      console.log(res, 'error');
-      this.token = res.token;
-    });
+    this.apiService.login('admin', {
+      name: 'admin',
+      pass: 'admin'
+    })
+      .subscribe(
+        (res: any) => {
+        this.res = res
+        console.log('response home component', this.res);
+      });
   }
 }

@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpHeaders} from '@angular/common/http';
 import {ApiService} from './api.service';
-import {Observable} from 'rxjs';
-import {Admin} from '../../models';
-import {map} from 'rxjs/operators';
+import {SocketService} from './ws.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,21 +9,21 @@ import {map} from 'rxjs/operators';
 export class LoginService {
 
   constructor(
-    private apiService: ApiService
+
+    // private wsService: SocketService
   ) {
   }
+  //
+  // httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   })
+  // }
+  // login(params: object) {
+  //   console.log(params)
+  //   const response = this.wsService.send('admin');
+  //   console.log(response);
+  // }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  }
-  login(params: object): Observable<Admin> {
-    return this.apiService.login('admin', params).pipe();
-
-  }
-  get() {
-    return this.apiService.get('admin').pipe();
-  }
 }
 
