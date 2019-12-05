@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 
 import { AppRoutingModule } from './app-routing.module';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule,MatInputModule } from  '@angular/material';
 import { HomeModule } from './home/home.module';
 import {CoreModule} from './core/core.module'
 
@@ -13,6 +13,7 @@ import {NavComponent} from './public/layout'
 import {FooterComponent} from './public/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent,NavComponent,FooterComponent],//components
@@ -22,9 +23,12 @@ import { HttpClientModule } from '@angular/common/http';
     MatListModule,
     MatButtonModule,
     MatIconModule,
+    MatInputModule,
     HomeModule,
     CoreModule,
     HttpClientModule,
+    FormsModule, 
+    ReactiveFormsModule
    ],//modules
   providers: [],
   bootstrap: [AppComponent]

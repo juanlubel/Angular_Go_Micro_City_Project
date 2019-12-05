@@ -1,0 +1,8 @@
+frontend con material design
+
+backend con go gingonic + wire + gorm + relationships
+
+redis with her backend in go Gingonic
+
+se ha creado una red para unificar los dominios controlados por traefick
+    docker network create web

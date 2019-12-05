@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: "banks",
     loadChildren: "./bank/bank.module#BankModule"
+  },
+  {
+    path: "forum",
+    loadChildren: "./forum/#ForumModule"
   }
   /* {
     path: "king",
