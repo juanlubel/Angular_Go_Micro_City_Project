@@ -77,8 +77,8 @@ func redirectHandler(c *gin.Context) {
 	// for example, in revel you could use revel.Config.StringDefault(provider + "_clientID", "") etc.
 	providerSecrets := map[string]map[string]string{
 		"github": {
-			"clientID":     os.Getenv("clientID"),
-			"clientSecret": os.Getenv("clientSecret"),
+			"clientID":     os.Getenv("CLIENTID"),
+			"clientSecret": os.Getenv("CLIENTSECRET"),
 			"redirectURL":  "http://bank.localhost:3010/auth/github/callback",
 		},
 		/* 		"google": {
