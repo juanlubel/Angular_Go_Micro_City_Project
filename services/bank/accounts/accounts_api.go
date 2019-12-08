@@ -33,11 +33,11 @@ func (p *AccountAPI) LogIn(c *gin.Context) {
 	token, err := p.JWT.GenerateJWT(pass)
 	account := p.AccountService.FindByBankAndName(name, bank)
 	if account == (BankAccount{}) {
-		c.JSON(http.StatusNotFound, gin.H{"login": "The User doesn't exist."})
+		c.JSON(http.StatusNotFound, gin.H{"error": "The User doesn't exist."})
 		return
 	}
 	if pass != account.AccountNumber {
-		c.JSON(http.StatusNotFound, gin.H{"login": "Invalid data"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "Invalid data"})
 		return
 	}
 	/* err = p.checkPassword(pass, admin)

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 /* import { HttpTokenInterceptor } from './interceptors/http.token.interceptor'; */
 
-import {ApiService,BankService} from './services';
+import {ApiService,BankService,ForumService} from './services';
 
 @NgModule({
   imports: [
@@ -11,7 +11,7 @@ import {ApiService,BankService} from './services';
   ],
   providers: [
     /* { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true }, */
-    ApiService,BankService
+    ApiService,BankService,ForumService
   ],
   declarations: []
 })

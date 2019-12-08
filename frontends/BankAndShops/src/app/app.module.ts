@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 
 
 import { AppRoutingModule } from './app-routing.module';
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule,MatInputModule } from  '@angular/material';
+import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule,
+         MatButtonModule,MatInputModule, MatDialogModule} from  '@angular/material';
 import { HomeModule } from './home/home.module';
 import {CoreModule} from './core/core.module'
 
@@ -14,9 +15,10 @@ import {FooterComponent} from './public/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CourseDialogComponent } from './public/components/dialog.component';
 
 @NgModule({
-  declarations: [AppComponent,NavComponent,FooterComponent],//components
+  declarations: [AppComponent,NavComponent,FooterComponent,CourseDialogComponent],//components
   imports: [BrowserModule, AppRoutingModule,BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -28,9 +30,11 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
     CoreModule,
     HttpClientModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    MatDialogModule 
    ],//modules
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CourseDialogComponent]  
 })
 export class AppModule {}

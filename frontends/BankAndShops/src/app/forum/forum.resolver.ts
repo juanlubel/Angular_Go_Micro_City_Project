@@ -1,15 +1,18 @@
-/* import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { Injectable } from '@angular/core';
+
+import { Resolve, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
+import { Topic, ForumService} from '../core';
+
 import { Observable } from 'rxjs';
 
-import { BankService, Banks } from '../core';
-import { take, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
-export class BankResolver implements Resolve<Banks> {
+export class TopicResolver implements Resolve<Topic> {
   constructor(
     private router: Router,
-    private BankService: BankService
+    private ForumService: ForumService
   ) {}
 
   resolve(
@@ -17,7 +20,9 @@ export class BankResolver implements Resolve<Banks> {
     state: RouterStateSnapshot
   ): Observable<any> {
 
-    return this.BankService.getAll().pipe(catchError((err) => this.router.navigateByUrl('/')));
+    return this.ForumService.getAllTopics().pipe(catchError((err) => this.router.navigateByUrl('/')));
 
   }
-} */
+}
+
+

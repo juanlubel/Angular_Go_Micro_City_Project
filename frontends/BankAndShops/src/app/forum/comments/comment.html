@@ -1,0 +1,36 @@
+
+<!-- <div class="input-area">
+    <h2 class="create_bank-header">Comment Section</h2>
+    <form [formGroup]="comment_area" (ngSubmit)="sendMessage()">
+    
+        <input type="text" placeholder="Your name" name="name" id="name" formControlName="comment_user">
+        <textarea type="text" placeholder="Your message" name="message" id="message" 
+                    formControlName="comment_message" rows="5"></textarea>
+      
+        <input type="submit" value="Send">
+        
+
+    </form>
+</div> -->
+<div class="container_comments">
+    <mat-list>
+        <mat-list-item >
+            <form class="comment-form" [formGroup]="comment_area" (ngSubmit)="sendMessage()">   
+                <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Leave a comment" formControlName="comment_message"></textarea>
+                </mat-form-field>           
+            </form>
+        </mat-list-item>
+        <mat-list-item >
+            <img matListAvatar src="https://p7.hiclipart.com/preview/267/704/935/gn-001-gundam-exia-drawing-mobile-suit-gundam-00-art-others-thumbnail.jpg" alt="...">
+           <div class="comment_text_area">
+                <h3 matLine> User Name </h3>
+                <p matLine>
+                    <span class="demo-2"> Comentario </span>
+                </p>
+           </div>
+            
+        </mat-list-item>
+    </mat-list>
+</div>
+      

@@ -39,6 +39,28 @@ services:
       traefik.frontend.entryPoints: "http"
       traefik.frontend.rule: "Host:bank.localhost"
 
+  forum:
+    build:
+      context: ./services/forum
+      dockerfile: Dockerfile
+    image: app/forum
+    restart: unless-stopped
+    networks:
+      - web
+      - internal
+    env_file:
+      - app-variables.env
+    volumes:
+      - ./services/forum:/go/src/forum
+    labels:
+      traefik.frontend.rule: "PathPrefix:/"
+      traefik.enable: "true"  
+      traefik.backend: "forum"
+      traefik.docker.network: web
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:forum.localhost"
+
   redis_server:
     build:
       context: ./redis

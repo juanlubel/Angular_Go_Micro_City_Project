@@ -32,7 +32,7 @@ func MakePublicAccountsRoutes(r *gin.Engine, db *gorm.DB, jwt *utils.JWT) {
 	r.POST("/account/login", accountAPI.LogIn)
 	r.Use(JWTAuthMiddleware(true, utils.Secret))
 	r.POST("/account", accountAPI.Create)
-	
+
 	/* 	r.PUT("/account/:name", accountAPI.Update)
 	   	r.DELETE("/account/:name", accountAPI.Delete) */
 }

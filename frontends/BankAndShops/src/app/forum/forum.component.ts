@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from  '@angular/forms';
+import { Topic,ForumService } from '../core';
 
 @Component({
   selector: 'app-forum',
@@ -9,24 +10,23 @@ import { FormBuilder, FormGroup, Validators } from  '@angular/forms';
 })
 export class ForumComponent implements OnInit{
 
+  topics:Topic[]
+
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    private ForumService:ForumService
     ){
   }
-  messages = [
-    {
-      from: 'Entity 1',
-      subject: 'Message Subject 1',
-      content: 'Message Content 1'
-    },
-    {
-      from: 'Entity 2',
-      subject: 'Message Subject 2',
-      content: 'Message Content 2'
-    },
-  ]
   ngOnInit(){
+    this.route.data.subscribe(data => {
+        console.log(data)
+        this.topics =data.topics
+    }) 
+  }
+  createTopic(e:Topic){
+    console.log(e)
+    this.ForumService.createTopic(e).subscribe()
 
   }
  

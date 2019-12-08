@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://bank.localhost:3010/'
+  api_url: 'http://bank.localhost:3010/',
+  forum_url: 'http://forum.localhost:3010/'
 };
 
 /*

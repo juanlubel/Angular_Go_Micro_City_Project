@@ -15,19 +15,18 @@ export class BankService {
   }
 
   getAll(): Observable<[Banks]> {
-    return this.apiService.get('banks')
+    return this.apiService.get('banks','api_url')
           .pipe(map(data => data.banks));
   }
   addBank (bank:Banks): Observable<Banks> {
-    console.log(bank)
-    return this.apiService.post('banks', bank)
+    return this.apiService.post('banks','api_url', bank)
       .pipe(
         catchError(this.formatErrors)
       );
   }
   login_bank (bank:Banks): Observable<any> {
-    console.log(bank)
-    return this.apiService.post('account/login', bank)
+    
+    return this.apiService.post('account/login','api_url', bank)
       .pipe(
         catchError(this.formatErrors)
       );

@@ -7,11 +7,11 @@ export interface Message {
   name: string;
 }
 @Component({
-  selector: 'app-chat',
+  selector: 'app-comment',
   templateUrl: './comment.html',
   styleUrls: ['./comment.component.css'],
 })
-export class ChatComponent implements OnInit {
+export class CommentComponent implements OnInit {
     constructor(private http: HttpClient,private formBuilder: FormBuilder,) {}
     /* @Output() onSendMessage: EventEmitter<Message> = new EventEmitter();
     message = {
