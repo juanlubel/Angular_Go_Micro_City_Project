@@ -13,7 +13,7 @@
           <input matInput placeholder="Password" value="" #adminPassword>
         </label>
       </mat-form-field>
-      <a mat-button (click)="login(adminName.value, adminPassword.value)">Click me!</a>
+      <a mat-button (click)="login('admin', adminName.value, adminPassword.value)">Click me!</a>
     </form>
   </div>
   <div class="userLogin">
@@ -21,16 +21,16 @@
     <form class="example-form">
       <mat-form-field class="example-full-width" appearance="fill">
         <label>
-          <input matInput placeholder="UserName" value="" >
+          <input matInput placeholder="UserName" value="" #userName>
         </label>
       </mat-form-field>
 
       <mat-form-field class="example-full-width" appearance="fill">
         <label>
-          <input matInput placeholder="Password" value="">
+          <input matInput placeholder="Password" value="" #userPass>
         </label>
       </mat-form-field>
-      <a mat-button label="Apretame!">Click me!</a>
+      <a mat-button (click)="login('user', userName.value, userPass.value)">Click me!</a>
     </form>
   </div>
 </div>

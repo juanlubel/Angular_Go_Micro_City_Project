@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../core/services';
+import {LoginService} from '../core/services';
 import {Admin} from '../models';
 import {map} from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     // private socketService: SocketService,
-    private apiService: ApiService
+    private apiService: LoginService
   ) {
 
   }
@@ -24,15 +24,12 @@ export class HomeComponent implements OnInit {
 
   }
 
-  login(a: string, b: string) {
+  login(type: string, a: string, b: string) {
     const params = {
       name: a,
       pass: b
     };
-    this.apiService.login('admin', {
-      name: 'admin',
-      pass: 'admin'
-    })
+    this.apiService.login(type, params)
       .subscribe(
         (res: any) => {
         this.res = res

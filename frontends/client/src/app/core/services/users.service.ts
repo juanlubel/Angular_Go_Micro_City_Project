@@ -20,13 +20,13 @@ export class UsersService {
     })
   };
   getAll() {
-    return this.apiService.get('idCards').pipe();
+    return this.apiService.get('user').pipe();
 
   }
-  login() {
-    return this.apiService.login('idCards', {
-      name: 'admin',
-      pass: 'admin'
-    }).pipe();
-  }
+  // login() {
+  //   return this.apiService.login('idCards', {
+  //     name: 'admin',
+  //     pass: 'admin'
+  //   }).pipe();
+  // }
 }

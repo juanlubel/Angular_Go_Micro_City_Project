@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  idCards: 'http://idcards.docker.localhost:3010/api/idCards/',
+  user: 'http://idcards.docker.localhost:3010/api/idCards/',
   admin: 'http://admin.docker.localhost:3010/admin/'
 };
 
