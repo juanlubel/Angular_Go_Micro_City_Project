@@ -36,6 +36,36 @@ type UserLoggedDTO struct {
 	Token   string	`json:"token"`
 }
 
+type UserLogInDTO struct {
+	Name 	string `json:"name"`
+	Pass	string `json:"pass"`
+}
+
+
+
+func LogIn(userLogInDTO UserLogInDTO) (u UserModel, err error) {
+	conn, err := db.ConnectSQL()
+
+	if err != nil {
+		return
+	}
+	defer conn.Close()
+
+	sentence := fmt.Sprintf("SELECT id, name, surname, slug, nCard, email, pass FROM Users WHERE name='%v'", userLogInDTO.Name)
+
+	err = conn.QueryRow(sentence).Scan(&u.ID, &u.Name, &u.Surname, &u.Slug, &u.NCard, &u.Email, &u.Pass)
+	if err != nil {
+		return
+	}
+
+	err = checkPassword(userLogInDTO.Pass, u.Pass)
+	if err != nil {
+		u = UserModel{}
+	}
+
+	return
+}
+
 func Details(id int64) (u UserModel, err error) {
 	conn, err := db.ConnectSQL()
 
@@ -168,6 +198,12 @@ func setPassword(password string) (string, error) {
 	PassStringified := string(pass)
 
 	return PassStringified, nil
+}
+
+func checkPassword(password string, dbPassword string) error {
+	bytePassword := []byte(password)
+	byteHashedPassword := []byte(dbPassword)
+	return bcrypt.CompareHashAndPassword(byteHashedPassword, bytePassword)
 }
 
 func setNCard(conn *sql.DB) (num float64, err error) {

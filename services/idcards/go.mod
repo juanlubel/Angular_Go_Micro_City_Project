@@ -6,6 +6,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/bariseser/Go-Seeder v0.0.0-20190723101804-8f674b670df7
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-openapi/jsonreference v0.19.3 // indirect
@@ -17,6 +18,7 @@ require (
 	github.com/mailru/easyjson v0.7.0 // indirect
 	github.com/mattn/go-colorable v0.1.4
 	github.com/mattn/go-isatty v0.0.11-0.20191009155615-0e9ddb7c0c0a
+	github.com/parnurzeal/gorequest v0.2.16
 	github.com/pilu/config v0.0.0-20131214182432-3eb99e6c0b9a
 	github.com/pilu/fresh v0.0.0-20190826141211-0fa698148017
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14
@@ -29,4 +31,5 @@ require (
 	golang.org/x/tools v0.0.0-20191114222411-4191b8cbba09 // indirect
 	google.golang.org/appengine v1.6.5 // indirect
 	gopkg.in/yaml.v2 v2.2.5 // indirect
+	moul.io/http2curl v1.0.0 // indirect
 )

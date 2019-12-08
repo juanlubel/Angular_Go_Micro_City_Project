@@ -1,14 +1,16 @@
 package admin
 
 import (
+
 	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	_ "github.com/gorilla/websocket"
+	"github.com/parnurzeal/gorequest"
 	"golang.org/x/crypto/bcrypt"
 
 	"Go_Gingonic_Server/common"
@@ -59,14 +61,14 @@ func (p *Api) LogIn(c *gin.Context) {
 	}
 	name := LogInAdminDTO.Name
 	pass := LogInAdminDTO.Pass
-	admin := p.Service.FindByName(&Admin{Name:name})
+	admin := p.Service.FindByName(&Admin{Name: name})
 	if admin == (Admin{}) {
 		c.JSON(http.StatusNotFound, gin.H{"login": "Invalid username"})
 		return
 	}
 	err = p.checkPassword(pass, admin)
 	if err != nil {
-		c.JSON(http.StatusForbidden,gin.H{"login":"Invalid password"})
+		c.JSON(http.StatusForbidden, gin.H{"login": "Invalid password"})
 		return
 	}
 
@@ -76,10 +78,19 @@ func (p *Api) LogIn(c *gin.Context) {
 		c.Status(http.StatusBadRequest)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"admin":ToLoggedAdminDTO(admin, token)})
+	res := ToLoggedAdminDTO(admin, token)
+
+	request := gorequest.New()
+	_, _, errs := request.Post("http://redis_server:3015/admin").Send(res).End()
+	if errs != nil {
+		fmt.Println(errs)
+		os.Exit(1)
+	}
+
+	fmt.Println(res)
+
+	c.JSON(http.StatusOK, gin.H{"logged": ToLoggedAdminDTO(admin, token)})
 }
-
-
 
 //FindByID :  The method to obtain specific data
 func (p *Api) FindByID(c *gin.Context) {
@@ -158,7 +169,6 @@ func (p *Api) Delete(c *gin.Context) {
 
 	c.Status(http.StatusOK)
 }
-
 
 func (p *Api) setPassword(password string) (string, error) {
 

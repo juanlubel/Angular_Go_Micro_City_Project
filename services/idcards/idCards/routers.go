@@ -5,6 +5,11 @@ import (
 	"github.com/bariseser/Go-Seeder"
 	"github.com/gin-gonic/gin"
 	"github.com/gosimple/slug"
+	"github.com/parnurzeal/gorequest"
+	"idcards/common"
+	"log"
+	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -29,7 +34,37 @@ func UsersSeed(router *gin.RouterGroup) {
 
 func loginIdCard(c *gin.Context) {
 	fmt.Print("Login")
-	c.JSON(200, gin.H{"user": "login"})
+	UserLogInDTO := UserLogInDTO{}
+	err := c.BindJSON(&UserLogInDTO)
+	if err != nil {
+		log.Fatalln(err)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	user, err := LogIn(UserLogInDTO)
+	if err != nil {
+		fmt.Print(err)
+		c.JSON(409, gin.H{"error": err, "user": user})
+		return
+	}
+
+	token, err := common.GenerateJWT(user.Name)
+	if err != nil {
+		fmt.Print(err)
+		c.JSON(409, gin.H{"error": err, "user": user})
+		return
+	}
+	res := ToUserLoggedDTO(user, token)
+
+	request := gorequest.New()
+	_, _, errs := request.Post("http://redis_server:3015/user").Send(res).End()
+	if errs != nil {
+		fmt.Println(errs)
+		os.Exit(1)
+	}
+
+	c.JSON(200, gin.H{"user":res})
 }
 
 func createIdCard(c *gin.Context) {
@@ -111,7 +146,7 @@ func createRows(c *gin.Context) {
 			Surname: 	surname,
 			Slug:		slugify,
 			Email:  	email,
-			Pass:  		surname,
+			Pass:  		name,
 		}
 		Create(u)
 		n++
