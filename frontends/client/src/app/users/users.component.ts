@@ -16,10 +16,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.usersService.getAll()
+    this.usersService.getUsers()
       .subscribe((res: any) => {
-      console.log(res);
-    });
+        console.log(res);
+      });
   }
 
   eventListener(event) {

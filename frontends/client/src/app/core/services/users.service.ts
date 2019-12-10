@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 
 import {HttpHeaders} from '@angular/common/http';
 import {ApiService} from './api.service';
+import {IUserHttp} from '../../models';
+import {Observable} from 'rxjs';
 
 
 @Injectable({
@@ -19,8 +21,8 @@ export class UsersService {
       'Content-Type': 'application/json'
     })
   };
-  getAll() {
-    return this.apiService.get('user').pipe();
+  getUsers(): Observable<IUserHttp> {
+    return this.apiService.get<>('user').pipe();
 
   }
   // login() {
