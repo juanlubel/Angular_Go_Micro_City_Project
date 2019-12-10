@@ -19,36 +19,6 @@ func ProvideTopicAPI(p TopicService, jwt *utils.JWT) TopicAPI {
 	return TopicAPI{TopicService: p, JWT: jwt}
 }
 
-/* func (p *TopicAPI) LogIn(c *gin.Context) {
-	var LogInUserDTO LogInUserDTO
-	err := c.BindJSON(&LogInUserDTO)
-	if err != nil {
-		log.Fatalln(err)
-		c.Status(http.StatusBadRequest)
-		return
-	}
-	name := LogInUserDTO.Owner
-	pass := LogInUserDTO.TopicNumber
-	bank := LogInUserDTO.Bank
-	token, err := p.JWT.GenerateJWT(pass)
-	account := p.TopicService.FindByBankAndName(name, bank)
-	if account == (Topic{}) {
-		c.JSON(http.StatusNotFound, gin.H{"login": "The User doesn't exist."})
-		return
-	}
-	if pass != account.TopicNumber {
-		c.JSON(http.StatusNotFound, gin.H{"login": "Invalid data"})
-		return
-	}
-	 err = p.checkPassword(pass, admin)
-	if err != nil {
-		c.JSON(http.StatusForbidden, gin.H{"login": "Invalid password"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"user": ToLoggedUserDTO(account, token)})
-} */
-
 /* Simple Crud Opperations */
 
 //FindAll : The method to obtain all the data of the table
@@ -57,13 +27,6 @@ func (p *TopicAPI) FindAll(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"topics": ToTopicDTOs(topics)})
 }
-
-//FindByOwner :  The method to obtain specific data
-/* func (p *TopicAPI) FindByOwner(c *gin.Context) {
-	owner := c.Param("name")
-	account := p.TopicService.FindByOwner(owner)
-	c.JSON(http.StatusOK, gin.H{"account": ToTopicDTO(account)})
-} */
 
 // Create : Create a new entry in the table (Used in Register Functionality)
 func (p *TopicAPI) Create(c *gin.Context) {
@@ -78,6 +41,29 @@ func (p *TopicAPI) Create(c *gin.Context) {
 	createdTopic := p.TopicService.Save(ToTopic(fullTopicDTO))
 
 	c.JSON(http.StatusOK, gin.H{"topic": ToTopicDTO(createdTopic)})
+}
+
+func (p *TopicAPI) CreateComment(c *gin.Context) {
+	var CommentDTO CommentDTO
+	err := c.BindJSON(&CommentDTO)
+	if err != nil {
+		log.Fatalln(err)
+		c.Status(http.StatusBadRequest)
+		return
+	}
+
+	createdComment := p.TopicService.SaveComment(ToComment(CommentDTO))
+
+	c.JSON(http.StatusOK, gin.H{"Comment": ToCommentDTO(createdComment)})
+}
+
+//FindByOwner :  The method to obtain specific data
+func (p *TopicAPI) FindByOwner(c *gin.Context) {
+	owner := c.Param("name")
+	topic := p.TopicService.FindByOwner(owner)
+	/* c.JSON(http.StatusOK, gin.H{"topic": ToTopicDTO(account)}) */
+	comments := p.TopicService.FindHisComments(owner)
+	c.JSON(http.StatusOK, gin.H{"topic": ToTopicWithCommentsDTO(comments, topic)})
 }
 
 /*
@@ -103,7 +89,6 @@ func (p *TopicAPI) Update(c *gin.Context) {
 
 	c.Status(http.StatusOK)
 }
-
 // Delete :  Deletes an specific content of the table
 func (p *TopicAPI) Delete(c *gin.Context) {
 	owner, _ := strconv.Atoi(c.Param("owner"))

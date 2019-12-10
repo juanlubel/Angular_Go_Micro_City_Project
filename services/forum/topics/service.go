@@ -16,14 +16,22 @@ func (p *TopicService) FindAll() []Topic {
 /* func (p *TopicService) FindByBankAndName(owner string, bank string) Topic {
 	return p.TopicRepository.FindByBankAndName(owner, bank)
 } */
-/* func (p *TopicService) FindByOwner(owner string) Topic {
+func (p *TopicService) FindByOwner(owner string) Topic {
 	return p.TopicRepository.FindByOwner(owner)
-} */
+}
+func (p *TopicService) FindHisComments(topic string) []Comment {
+	return p.TopicRepository.FindByTopic(topic)
+}
 
 func (p *TopicService) Save(topic Topic) Topic {
 	p.TopicRepository.Save(topic)
 
 	return topic
+}
+func (p *TopicService) SaveComment(comment Comment) Comment {
+	p.TopicRepository.SaveComment(comment)
+
+	return comment
 }
 
 func (p *TopicService) Delete(topic Topic) {

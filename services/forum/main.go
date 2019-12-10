@@ -24,7 +24,7 @@ func initDB() *gorm.DB { //Gorm Abre la conexion a base de datos
 		panic(err)
 	}
 
-	db.AutoMigrate(&topics.Topic{}) //genera las tablas dependiendo de los modelos que le pasemos
+	db.AutoMigrate(&topics.Topic{}, &topics.Comment{}) //genera las tablas dependiendo de los modelos que le pasemos
 
 	return db
 }

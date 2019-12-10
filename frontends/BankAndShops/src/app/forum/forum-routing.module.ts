@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import {ForumComponent} from "./forum.component"
 import { CommentComponent } from './comments/comment.component';
-import { TopicResolver } from './forum.resolver';
+import { TopicResolver } from './topics/forum.resolver';
 
 
 const routes: Routes = [

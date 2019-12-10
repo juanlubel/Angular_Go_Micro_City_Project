@@ -32,19 +32,31 @@ func (p *TopicRepository) FindAll() []Topic {
 } */
 
 //FindByOwner :  obtain from db the data that contains the param name
-/* func (p *TopicRepository) FindByOwner(owner string) Topic {
+func (p *TopicRepository) FindByOwner(owner string) Topic {
 	var topic Topic
 	println(owner)
-	p.DB.Where("Owner = ?", owner).First(&topic)
+	p.DB.Where("topic_title = ?", owner).First(&topic)
 
 	return topic
-} */
+}
+func (p *TopicRepository) FindByTopic(topicTittle string) []Comment {
+	var comment []Comment
+	var topic Topic
+
+	p.DB.Model(&topic).Related(&comment, "TopicTittle")
+	return comment
+}
 
 //Save : stores the changes occurred when creating or updating entries in the database
 func (p *TopicRepository) Save(topic Topic) Topic {
 	p.DB.Save(&topic)
 
 	return topic
+}
+func (p *TopicRepository) SaveComment(Comment Comment) Comment {
+	p.DB.Save(&Comment)
+
+	return Comment
 }
 
 // Delete : Deletes from the data base

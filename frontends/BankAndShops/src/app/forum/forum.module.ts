@@ -8,7 +8,7 @@ import { ForumRoutingModule } from './forum-routing.module';
 import { ForumComponent } from './forum.component';
 import { TopicComponent } from './topics/topic.component';
 import { CommentComponent } from './comments/comment.component';
-import { TopicResolver } from './forum.resolver';
+import { TopicResolver } from './topics/forum.resolver';
 
 @NgModule({
   declarations: [ForumComponent,TopicComponent,CommentComponent],

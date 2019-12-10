@@ -8,11 +8,34 @@ func ToTopic(TopicDTO TopicDTO) Topic {
 	}
 }
 
+//ToComment : mapper single objectDTO to gorm struct
+func ToComment(CommentDTO CommentDTO) Comment {
+	return Comment{
+		Author:      CommentDTO.Author,
+		Body:        CommentDTO.Body,
+		TopicTittle: CommentDTO.TopicTittle,
+	}
+}
+
 /*ToTopicDTO : mapper to gorm struct to single object DTO */
 func ToTopicDTO(topic Topic) TopicDTO {
 	return TopicDTO{
 		Author:     topic.Author,
 		TopicTitle: topic.TopicTitle,
+	}
+}
+func ToCommentDTO(comment Comment) CommentDTO {
+	return CommentDTO{
+		Author:      comment.Author,
+		Body:        comment.Body,
+		TopicTittle: comment.TopicTittle,
+	}
+}
+
+func ToTopicWithCommentsDTO(comment []Comment, topic Topic) TopicWithCommentsDTO {
+	return TopicWithCommentsDTO{
+		Topic:    ToTopicDTO(topic),
+		Comments: ToCommentDTOs(comment),
 	}
 }
 
@@ -25,4 +48,14 @@ func ToTopicDTOs(topic []Topic) []TopicDTO {
 	}
 
 	return topicsDtos
+}
+func ToCommentDTOs(comment []Comment) []CommentDTO {
+
+	commentDtos := make([]CommentDTO, len(comment))
+
+	for i, itm := range comment {
+		commentDtos[i] = ToCommentDTO(itm)
+	}
+
+	return commentDtos
 }
