@@ -31,6 +31,7 @@ type UserDTO struct {
 }
 
 type UserLoggedDTO struct {
+	Name    string  `json:"name"`
 	Slug    string  `json:"slug"`
 	NCard   float64 `json:"nCard"`
 	Token   string	`json:"token"`
