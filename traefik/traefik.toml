@@ -145,6 +145,8 @@
 # Default: ""
 #
 domain = "docker.localhost"
+watch = true
+network = "web"
 
 # Expose containers by default in traefik
 #

@@ -2,63 +2,135 @@ version: "3"
 
 services:
 # Clients
-  client:
+  bankandshops:
     build:
-      context: ./frontends/client
+      context: ./frontends/BankAndShops
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
     depends_on:
       - traefik
     links:
       - traefik
     ports:
-      - 4200:4200
+      - 4500:4500
     volumes:
-      - ./frontends/client:/app
+      - ./frontends/BankAndShops:/app
 
-# Servers 
-  idcards:
+# Servers
+  bank:
     build:
-      context: ./services/idcards
+      context: ./services/bank
       dockerfile: Dockerfile
-    image: app/idcards
-    restart: always
+    image: app/bank
+    restart: unless-stopped
+    networks:
+      - web
+      - internal
     env_file:
       - app-variables.env
     volumes:
-      - ./services/idcards:/go/src/idcards
+      - ./services/bank:/go/src/bank
     labels:
-      traefik.backend: idcards
-      traefik.frontend.rule: "Host:idcards.docker.localhost"
-    ports:
-      - 3030:3030
-    depends_on:
-      - db
-    links:
-      - db
+      traefik.frontend.rule: "PathPrefix:/"
+      traefik.enable: "true"  
+      traefik.backend: "bank"
+      traefik.docker.network: web
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:bank.localhost"
 
+  forum:
+    build:
+      context: ./services/forum
+      dockerfile: Dockerfile
+    image: app/forum
+    restart: unless-stopped
+    networks:
+      - web
+      - internal
+    env_file:
+      - app-variables.env
+    volumes:
+      - ./services/forum:/go/src/forum
+    labels:
+      traefik.frontend.rule: "PathPrefix:/"
+      traefik.enable: "true"  
+      traefik.backend: "forum"
+      traefik.docker.network: web
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:forum.localhost"
+
+  redis_server:
+    build:
+      context: ./redis
+      dockerfile: Dockerfile
+    image: app/redis
+    restart: unless-stopped
+    depends_on: 
+      - redis # This service depends on redis. Start that first.
+    environment: # Pass environment variables to the service
+      REDIS_URL: redis:6379   
+    volumes:
+      - ./redis:/go/src/redis
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+      - web
+    labels:
+      traefik.frontend.rule: "PathPrefix:/"
+      traefik.enable: "true"  
+      traefik.docker.network: web
+      traefik.backend: "redis_server"
+      traefik.port: "3015"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: 'Host:redis.localhost'
 
 # Services 
   traefik:
     image: traefik:v1.7
     ports:
-      - "80:80"
+      - "3015:80"
+      - "3010:80"
       - "5050:8080"
+    networks:
+      - web
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik/traefik.toml:/traefik.toml
+  
+  redis:
+    image: "redis:alpine" # Use a public Redis image to build the redis service    
+    restart: unless-stopped
+    networks:
+      - backend
+    ports:
+      - "6379:6379"
 
-  db:
+  mysql:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+    restart: unless-stopped
     ports:
       - 3306:3306
-    env_file:
-      - db.env
+    environment:
+      MYSQL_DATABASE: microcity
+      MYSQL_ROOT_USERNAME: root
+      MYSQL_ROOT_PASSWORD: test
+    volumes:
+    - /mysql:/var/lib/mysql
+    networks:
+      - internal
+    labels:
+      traefik.enable: "false"
 
   adminer:
     image: adminer
-    restart: always
+    restart: unless-stopped
     ports:
       - 8080:8080
+
+networks:
+  backend: 
+  web:
+    external: true
+  internal:
+    external: false

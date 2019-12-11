@@ -1,0 +1,25 @@
+.container_comments{
+  margin: 5%;
+}
+.comment_text_area{
+    border-bottom: gray 1px solid;
+    width: 100%;
+    margin-left: 1%;
+}
+.mat-list-base .mat-list-item .mat-list-avatar, .mat-list-base .mat-list-option .mat-list-avatar {
+    flex-shrink: 0;
+    width: 6%;
+    height: 89%;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+.comment-form{
+    margin-left: 7%;
+    padding-bottom: 2%;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }

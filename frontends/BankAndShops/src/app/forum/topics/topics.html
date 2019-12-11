@@ -1,0 +1,16 @@
+<div class="container_comments">
+    <mat-list>
+        <mat-list-item *ngFor="let message of messages">
+            <img matListAvatar src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu">
+            <h3 matLine> {{message.TopicTitle}} </h3>
+            <p matLine>
+                <span> {{message.Author}} </span>
+               
+            </p>
+            <button mat-icon-button>
+                <mat-icon (click)="goTopic(message.TopicTitle)">info</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-list>
+</div>
+<button mat-flat-button color="primary" (click)="openDialog()">Create Topic</button>
