@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from  '@angular/forms';
-import { Topic,ForumService } from '../core';
+import { Topic,ForumService, Comment } from '../core';
 
 @Component({
   selector: 'app-forum',
@@ -27,9 +27,7 @@ export class ForumComponent implements OnInit{
   createTopic(e:Topic){
     console.log(e)
     this.ForumService.createTopic(e).subscribe()
-
   }
- 
 
 
 }

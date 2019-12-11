@@ -41,9 +41,10 @@ func (p *TopicRepository) FindByOwner(owner string) Topic {
 }
 func (p *TopicRepository) FindByTopic(topicTittle string) []Comment {
 	var comment []Comment
-	var topic Topic
-
-	p.DB.Model(&topic).Related(&comment, "TopicTittle")
+	/* var topic Topic */
+	/* p.DB.Find(&comment) */
+	/* p.DB.Model(&topic).Related(&comment, "TopicTitle") */
+	p.DB.Where("topic_tittle = ?", topicTittle).Find(&comment)
 	return comment
 }
 

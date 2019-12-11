@@ -5,7 +5,7 @@ import { RouterModule, Routes } from "@angular/router";
 import {ForumComponent} from "./forum.component"
 import { CommentComponent } from './comments/comment.component';
 import { TopicResolver } from './topics/forum.resolver';
-
+import { CommentResolver } from './comments/comments.resolve';
 
 const routes: Routes = [
     {
@@ -18,9 +18,9 @@ const routes: Routes = [
       {
         path: 'topic/:topic_name',
         component: CommentComponent,
-        /* resolve: {
-          banks: BankResolver
-        } */
+        resolve: {
+          topic: CommentResolver
+        }
       }
 
 ];

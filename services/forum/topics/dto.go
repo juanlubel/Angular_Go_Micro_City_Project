@@ -9,10 +9,10 @@ type TopicDTO struct {
 type CommentDTO struct {
 	Author      string `json:"Author"`
 	Body        string `json:"Body"`
-	TopicTittle string `json:TopicTittle`
+	TopicTittle string `json:TopicTitle`
 }
 
 type TopicWithCommentsDTO struct {
-	Topic    TopicDTO     `json:"TopicDesc"`
-	Comments []CommentDTO `json:"comments"`
+	Topic    TopicDTO     `json:"Topic"`
+	Comments []CommentDTO `json:"Comments"`
 }
