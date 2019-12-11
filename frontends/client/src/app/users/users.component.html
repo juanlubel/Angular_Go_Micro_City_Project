@@ -1,4 +1,6 @@
 <p>{{title}}</p>
 <p>{{hostedString}}</p>
 
-<app-users-list [dataSon]="dataParent" (Select)="title = $event"></app-users-list>
+<app-users-list [dataSon]="users$ | async " (Select)="title = $event"></app-users-list>
+
+<!--<p *ngFor="let user of users$">{{user}}</p>-->

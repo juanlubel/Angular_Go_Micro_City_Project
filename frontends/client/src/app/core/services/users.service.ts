@@ -19,7 +19,7 @@ export class UsersService {
       'Content-Type': 'application/json'
     })
   };
-  getAll() {
+  getUsers() {
     return this.apiService.get('user').pipe();
 
   }

@@ -8,6 +8,14 @@ import {HttpClientModule} from '@angular/common/http';
 import {HomeModule} from './home/home.module';
 import {CoreModule} from './core';
 
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {appReducers} from './store/reducers/app.reducers';
+import {UserEffects} from './store/effects/user.effects';
+import {environment} from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +26,11 @@ import {CoreModule} from './core';
     AppRoutingModule,
     HttpClientModule,
     CoreModule,
-    HomeModule
+    HomeModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([UserEffects]),
+    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     // BrowserAnimationsModule
   ],
   providers: [],
