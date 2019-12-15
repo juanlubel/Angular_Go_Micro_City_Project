@@ -37,7 +37,11 @@ func (p *TopicAPI) Create(c *gin.Context) {
 		c.Status(http.StatusBadRequest)
 		return
 	}
-
+	_, err = http.Get("http://redis_server:3015/remove") //delete the cache from redis server
+	if err != nil {
+		println("Something wrong deleting  the key in redis server")
+		panic(err)
+	}
 	createdTopic := p.TopicService.Save(ToTopic(fullTopicDTO))
 
 	c.JSON(http.StatusOK, gin.H{"topic": ToTopicDTO(createdTopic)})

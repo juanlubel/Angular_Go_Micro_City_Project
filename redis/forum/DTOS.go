@@ -5,5 +5,5 @@ type TopicDTO struct {
 	TopicTitle string
 }
 type Topics struct {
-	Topics []TopicDTO
+	Topics []TopicDTO `json:"topics"`
 }

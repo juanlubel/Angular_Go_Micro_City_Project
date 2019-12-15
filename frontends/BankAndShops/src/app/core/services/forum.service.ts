@@ -15,7 +15,7 @@ import { Comment } from '../models';
       return  throwError(error.error);
     }
     getAllTopics(): Observable<[Topic]> {
-      return this.apiService.get('topics',"forum_url")
+      return this.apiService.get('topics',"prequery_url")
             .pipe(map(data => data.topics));
     }
     createTopic (topic:Topic): Observable<Topic> {
