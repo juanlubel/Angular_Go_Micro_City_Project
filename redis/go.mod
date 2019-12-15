@@ -10,5 +10,7 @@ require (
 	github.com/gorilla/mux v1.7.3
 	github.com/jinzhu/gorm v1.9.11
 	github.com/joho/godotenv v1.3.1-0.20190204044109-5c0e6c6ab1a0
+	github.com/parnurzeal/gorequest v0.2.16
 	github.com/pilu/fresh v0.0.0-20190826141211-0fa698148017
+	moul.io/http2curl v1.0.0 // indirect
 )
