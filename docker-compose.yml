@@ -2,22 +2,22 @@ version: "3"
 
 services:
 # Clients
-#  bankandshops:
-#    build:
-#      context: ./frontends/BankAndShops
-#      dockerfile: Dockerfile
-#
-#    restart: always
-#    env_file:
-#      - app-variables.env
-#    depends_on:
-#      - traefik
-#    links:
-#      - traefik
-#    ports:
-#      - 4500:4500
-#    volumes:
-#      - ./frontends/BankAndShops:/app
+  bankandshops:
+    build:
+      context: ./frontends/BankAndShops
+      dockerfile: Dockerfile
+
+    restart: always
+    env_file:
+      - app-variables.env
+    depends_on:
+      - traefik
+    links:
+      - traefik
+    ports:
+      - 4500:4500
+    volumes:
+      - ./frontends/BankAndShops:/app
   client:
     build:
       context: ./frontends/client
@@ -35,47 +35,47 @@ services:
       - ./frontends/client:/app
 
 # Servers
-#  bank:
-#    build:
-#      context: ./services/bank
-#      dockerfile: Dockerfile
-#    image: app/bank
-#    restart: unless-stopped
-#    networks:
-#      - web
-#      - internal
-#    env_file:
-#      - app-variables.env
-#    volumes:
-#      - ./services/bank:/go/src/bank
-#    labels:
-#      traefik.enable: "true"
-#      traefik.backend: "bank"
-#      traefik.docker.network: web
-#      traefik.port: "3010"
-#      traefik.frontend.entryPoints: "http"
-#      traefik.frontend.rule: "Host:bank.localhost"
-#
-#  forum:
-#    build:
-#      context: ./services/forum
-#      dockerfile: Dockerfile
-#    image: app/forum
-#    restart: unless-stopped
-#    networks:
-#      - web
-#      - internal
-#    env_file:
-#      - app-variables.env
-#    volumes:
-#      - ./services/forum:/go/src/forum
-#    labels:
-#      traefik.enable: "true"
-#      traefik.backend: "forum"
-#      traefik.docker.network: web
-#      traefik.port: "3010"
-#      traefik.frontend.entryPoints: "http"
-#      traefik.frontend.rule: "Host:forum.localhost"
+  bank:
+    build:
+      context: ./services/bank
+      dockerfile: Dockerfile
+    image: app/bank
+    restart: unless-stopped
+    networks:
+      - web
+      - internal
+    env_file:
+      - app-variables.env
+    volumes:
+      - ./services/bank:/go/src/bank
+    labels:
+      traefik.enable: "true"
+      traefik.backend: "bank"
+      traefik.docker.network: web
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:bank.localhost"
+
+  forum:
+    build:
+      context: ./services/forum
+      dockerfile: Dockerfile
+    image: app/forum
+    restart: unless-stopped
+    networks:
+      - web
+      - internal
+    env_file:
+      - app-variables.env
+    volumes:
+      - ./services/forum:/go/src/forum
+    labels:
+      traefik.enable: "true"
+      traefik.backend: "forum"
+      traefik.docker.network: web
+      traefik.port: "3010"
+      traefik.frontend.entryPoints: "http"
+      traefik.frontend.rule: "Host:forum.localhost"
 
   idcards:
     build:
