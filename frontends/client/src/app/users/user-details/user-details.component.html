@@ -1,0 +1,9 @@
+<p>user-details works!</p>
+
+<form *ngIf="user">
+  <label>Name:</label>
+  <input value="{{user.name}}" #name>
+  <label>Email:</label>
+  <input value="{{user.email}}" #email>
+  <a mat-button (click)="updateUser(name.value, email.value)">Click me!</a>
+</form>

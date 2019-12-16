@@ -1,5 +1,7 @@
 <p>users-list works!</p>
 
-<p *ngFor="let item of sonArray">
-  {{item}}
+<p *ngFor="let item of users" (click)="selectUser(item.slug)">
+  Nombre: {{item.name}} Email: {{item.email}} || Slug: {{item.slug}} IdCard: {{item.nCard}}
 </p>
+
+

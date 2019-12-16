@@ -1,0 +1,30 @@
+p {
+  font-weight: bold;
+  text-align: center;
+}
+
+.home_container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.adminLogin, .userLogin {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-form {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 600px) {
+  .home_container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+}
+
+
+

@@ -3,9 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  users: 'http://idcards.docker.localhost:3010/api/idCards/',
+  user: 'http://idcards.docker.localhost:3010/api/idCard/',
+  admin: 'http://admin.docker.localhost:3010/admin/',
+  redis: 'http://redis_server:3015/'
 };
 
+// "http://redis_server:3015/user"
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

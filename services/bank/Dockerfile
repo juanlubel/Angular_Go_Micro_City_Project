@@ -11,7 +11,7 @@ RUN go mod download
 COPY . .
 RUN go get github.com/google/wire/cmd/wire; \
     wire;
-    
+
 RUN go build -o main .
 
 RUN go get github.com/pilu/fresh

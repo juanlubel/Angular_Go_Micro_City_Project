@@ -43,11 +43,28 @@ func CreateTable() error {
 	_, err = conn.Query("CREATE TABLE IF NOT EXISTS Users(" +
 		"id INT NOT NULL AUTO_INCREMENT PRIMARY KEY," +
 		"name VARCHAR(255) NOT NULL UNIQUE," +
-		"email VARCHAR(255)" +
+		"surname VARCHAR(255)," +
+		"slug VARCHAR(255)," +
+		"email VARCHAR(255)," +
+		"nCard DOUBLE NOT NULL," +
+		"pass VARCHAR(255)" +
 		")")
+
+
 	if err != nil {
+		fmt.Print("error1")
 		return err
 	}
+	//var res string
+	//err = conn.QueryRow("select id from Users").Scan(res)
+	//if err != nil {
+	//	fmt.Print("error2")
+	//}
+
+	//for rows.Next() {
+	//	fmt.Print(res)
+	//	rows.Scan(&res)
+	//}
 	return nil
 }
 

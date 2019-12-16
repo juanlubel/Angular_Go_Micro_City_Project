@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Host, Input, OnInit, Output} from '@angular/core';
-import {UsersComponent} from "../users.component";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {User} from '../../models';
 
 @Component({
   selector: 'app-users-list',
@@ -7,16 +7,19 @@ import {UsersComponent} from "../users.component";
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
+  // tslint:disable-next-line:no-input-rename
+  @Input('users') users: User[];
+  @Output() Select = new EventEmitter<string>();
+  constructor() {
 
-  constructor(@Host() private _home: UsersComponent) { }
-  @Input("dataSon") sonArray: string[]
-  @Output() Select = new EventEmitter<string>()
-
+  }
   ngOnInit() {
-    this.Select.emit("Hello Emit User")
 
-    this._home.hostedString = "una string"
   }
 
+  selectUser(slug: string) {
+    console.log(slug);
+    this.Select.emit(slug);
+  }
 
 }

@@ -1,5 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {UsersService} from "../services/users.service";
+import {Store} from '@ngrx/store';
+import {GetUser, GetUsers, UpdateUser} from '../store/actions/user.actions';
+import {IAppState} from '../store/state/app.state';
+import {selectSelectedUser, selectUserList} from '../store/selectors/user.selector';
+import {Observable} from 'rxjs';
+import {User} from '../models';
 
 @Component({
   selector: 'app-users',
@@ -8,20 +13,24 @@ import {UsersService} from "../services/users.service";
 })
 export class UsersComponent implements OnInit {
 
-  title: string = "Hello Users"
-  dataParent: string[] = ["uno", "dos", "tres"]
-  hostedString: string
+  public users$ = new Observable<User[]>();
+  public user$ = new Observable<User>();
 
-  constructor(private usersService: UsersService) {
+  constructor(private store: Store<IAppState>) {
+    this.users$ = store.select(selectUserList);
+    this.user$ = this.store.select(selectSelectedUser);
+
   }
 
   ngOnInit() {
-    console.log(this.usersService.get().subscribe((res: any) => {
-      console.log(res)
-    }))
+    this.store.dispatch(new GetUsers());
   }
 
-  eventListener(event) {
-    console.log(event);
+  selectUser(slug: string) {
+    console.log('click', slug);
+    this.store.dispatch(new GetUser(slug));
+    this.user$ = this.store.select(selectSelectedUser);
+    console.log(this.user$);
   }
+
 }

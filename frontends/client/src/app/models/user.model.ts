@@ -1,6 +1,19 @@
-export interface UserModel {
+export interface User {
+  'name': string;
+  'email': string;
+  'slug': string;
+  'nCard': string;
+}
 
-  "id": number,
-  "name": string,
-  "email": string
+export interface IUserHttp {
+  'users': User[];
+}
+
+export interface TokenType {
+  'name': string;
+  'type': string;
+}
+
+export interface TokenHttp {
+  'token': string;
 }

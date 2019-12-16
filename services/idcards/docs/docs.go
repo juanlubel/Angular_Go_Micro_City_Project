@@ -47,8 +47,8 @@ var doc = `{
     },
     "/idCard/{id}": {
       "get": {
-        "summary": "User Details",
-        "description": "User Details",
+        "summary": "Show All Users",
+        "description": "Show All Users",
         "tags": [
           "idCards"
         ],
@@ -83,7 +83,19 @@ var doc = `{
         "name": {
           "type": "string"
         },
+        "surname": {
+          "type": "string"
+        },
+		"slug": {
+          "type": "string"
+        },
         "email": {
+          "type": "string"
+        },
+        "nCard": {
+          "type": "integer"
+        },
+        "pass": {
           "type": "string"
         }
       }

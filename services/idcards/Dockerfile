@@ -16,10 +16,9 @@ COPY . .
 RUN go build -o main .
 
 RUN go get github.com/pilu/fresh; \
-    go get -u github.com/kardianos/govendor
+    go get -u github.com/kardianos/govendor;
 
 EXPOSE 3030
 
-
-ENTRYPOINT ["fresh"]
+CMD sleep 10 && fresh
 
