@@ -31,7 +31,7 @@ func (p *CacheServerAPI) GetTopics(c *gin.Context) {
 	if err != nil {                                                //if redis dont have the data get it from db
 		topic := Topics{} //Set the data struct
 		//get de data from the corresponding server
-		result := p.redisStruct.GetDB(p.redisClient, "http://forum:3010/topics", &topic, "topics")
+		result := p.redisStruct.GetDB(p.redisClient, "http://forum:3010/topics", &topic)
 		println("get from db")
 
 		//store the data in the correspondig key

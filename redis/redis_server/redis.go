@@ -44,7 +44,7 @@ func (p *MainAPi) GetRedis(client *redis.Client, key string) (string, error) {
 }
 
 //GetDB :  Get data stored in other servers
-func (p *MainAPi) GetDB(client *redis.Client, url string, data interface{}, key string) interface{} {
+func (p *MainAPi) GetDB(client *redis.Client, url string, data interface{}) interface{} {
 	response, err := http.Get(url)
 	if err != nil {
 		fmt.Printf("%s", err)
