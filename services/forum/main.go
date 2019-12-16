@@ -35,7 +35,7 @@ func main() {
 
 	r := gin.Default() //creamos el router
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://bank.localhost:3010"},
+		AllowOrigins:     []string{"http://bank.localhost:3010", "http://redis.localhost:3015"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},

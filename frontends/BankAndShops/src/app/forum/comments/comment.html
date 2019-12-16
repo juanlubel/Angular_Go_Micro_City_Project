@@ -1,36 +1,50 @@
 
-<!-- <div class="input-area">
-    <h2 class="create_bank-header">Comment Section</h2>
-    <form [formGroup]="comment_area" (ngSubmit)="sendMessage()">
-    
-        <input type="text" placeholder="Your name" name="name" id="name" formControlName="comment_user">
-        <textarea type="text" placeholder="Your message" name="message" id="message" 
-                    formControlName="comment_message" rows="5"></textarea>
-      
-        <input type="submit" value="Send">
-        
-
-    </form>
-</div> -->
-<div class="container_comments">
+<!-- <div class="container_comments">
+        <h1>{{topicWithComments.TopicDesc.TopicTitle}}</h1>
     <mat-list>
-        <mat-list-item >
-            <form class="comment-form" [formGroup]="comment_area" (ngSubmit)="sendMessage()">   
-                <mat-form-field class="example-full-width">
-                    <textarea matInput placeholder="Leave a comment" formControlName="comment_message"></textarea>
-                </mat-form-field>           
-            </form>
-        </mat-list-item>
-        <mat-list-item >
+        <mat-list-item *ngFor="let comment of topicWithComments.comments" >
             <img matListAvatar src="https://p7.hiclipart.com/preview/267/704/935/gn-001-gundam-exia-drawing-mobile-suit-gundam-00-art-others-thumbnail.jpg" alt="...">
            <div class="comment_text_area">
-                <h3 matLine> User Name </h3>
+                <h3 matLine> {{comment.Author}} </h3>
                 <p matLine>
-                    <span class="demo-2"> Comentario </span>
+                    <span class="demo-2"> {{comment.Body}} </span>
                 </p>
            </div>
             
         </mat-list-item>
+        <mat-list-item id="comment_area" >
+            <form class="comment-form" [formGroup]="comment_area" (ngSubmit)="sendMessage()">   
+                <mat-form-field class="example-full-width">
+                    <textarea matInput placeholder="Leave a comment" formControlName="comment_message"></textarea>
+                </mat-form-field>    
+                <input type="submit" value="Submit">
+       
+            </form>
+        </mat-list-item>
     </mat-list>
+</div> -->
+<div class="tittle">
+        <h1>{{topicWithComments.Topic.TopicTitle}}</h1>
 </div>
+<div id="comments">  
+        
+        <div class="comment_text_area" *ngFor="let comment of topicWithComments.Comments">
+                <h3 matLine> {{comment.Author}} </h3>
+                <p matLine>
+                    <span class="demo-2"> {{comment.Body}} </span>
+                </p>
+           </div>
+</div>
+  <div class="comment_input">
+    <form [formGroup]="comment_area" (ngSubmit)="sendMessage()">
+        <div class="container" style="background-color:white">
+            <textarea formControlName="comment_message" name="subject" placeholder="Write your comment here..."></textarea>
+        </div>
+        
+        <div class="container">
+            <input type="submit" value="Make a comment">
+        </div>
+    </form>   
+  </div>
+
       

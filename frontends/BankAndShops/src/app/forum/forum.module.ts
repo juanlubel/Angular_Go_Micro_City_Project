@@ -9,6 +9,8 @@ import { ForumComponent } from './forum.component';
 import { TopicComponent } from './topics/topic.component';
 import { CommentComponent } from './comments/comment.component';
 import { TopicResolver } from './topics/forum.resolver';
+import { CommentResolver } from './comments/comments.resolve';
+
 
 @NgModule({
   declarations: [ForumComponent,TopicComponent,CommentComponent],
@@ -17,7 +19,7 @@ import { TopicResolver } from './topics/forum.resolver';
     MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule,
     MatFormFieldModule,MatInputModule,MatGridListModule,MatDividerModule,MatCardModule],
   providers: [
-    TopicResolver
+    TopicResolver,CommentResolver
   ],
   exports:[]
 })

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
   
 import { ApiService } from './api.service';
-import { Topic } from '..';
+import { Topic, TopicWithComments } from '..';
 import { map, catchError } from 'rxjs/operators';
+import { Comment } from '../models';
 
   @Injectable()
   export class ForumService {
@@ -14,12 +15,19 @@ import { map, catchError } from 'rxjs/operators';
       return  throwError(error.error);
     }
     getAllTopics(): Observable<[Topic]> {
-      return this.apiService.get('topics',"forum_url")
+      return this.apiService.get('topics',"prequery_url")
             .pipe(map(data => data.topics));
     }
     createTopic (topic:Topic): Observable<Topic> {
       console.log(topic)
       return this.apiService.post('topics','forum_url', topic)
+        .pipe(
+          catchError(this.formatErrors)
+        );
+    }
+    createComment (comment:Comment,Topic:String): Observable<Comment> {
+      console.log(comment)
+      return this.apiService.post('topic/comment','forum_url', comment)
         .pipe(
           catchError(this.formatErrors)
         );
@@ -30,5 +38,9 @@ import { map, catchError } from 'rxjs/operators';
         .pipe(
           catchError(this.formatErrors)
         );
-    } 
+    }
+    getTopic(topic_title:string):Observable<TopicWithComments>{
+      return this.apiService.get(`topics/`+topic_title,"forum_url")
+      .pipe(map(data => data.topic));
+    }
   }
