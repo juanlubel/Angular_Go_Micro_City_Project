@@ -12,6 +12,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+
 func initDB() *gorm.DB { //Gorm Abre la conexion a base de datos
 	var DBHOST = "mysql"
 	var DBPORT = "3306"
@@ -36,7 +37,7 @@ func main() {
 
 	r := gin.Default() //creamos el router
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://bank.localhost:3010"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},

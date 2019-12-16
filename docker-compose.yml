@@ -117,6 +117,7 @@ services:
       - backend
       - web
     labels:
+
       traefik.enable: "true"
       traefik.docker.network: web
       traefik.backend: "redis_server"
@@ -152,7 +153,7 @@ services:
   traefik:
     image: traefik:v1.6
     ports:
-
+      - "3015:80"
       - "3010:80"
       - "5050:8080"
     networks:

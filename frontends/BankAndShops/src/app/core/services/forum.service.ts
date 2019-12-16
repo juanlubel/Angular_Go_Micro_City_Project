@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-  
+
 import { ApiService } from './api.service';
 import { Topic, TopicWithComments } from '..';
 import { map, catchError } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { Comment } from '../models';
       return  throwError(error.error);
     }
     getAllTopics(): Observable<[Topic]> {
+      console.log('all users')
       return this.apiService.get('topics',"prequery_url")
             .pipe(map(data => data.topics));
     }

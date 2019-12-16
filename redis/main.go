@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+
 func main() {
 	r := gin.Default() //creamos el router
 	r.Use(cors.New(cors.Config{
