@@ -13,6 +13,7 @@ import { Topic } from 'src/app/core';
 export class TopicComponent implements OnInit{
   @Input("topics") topics:any
   @Output() ToggleCreate = new EventEmitter<any>();
+  @Output() ToggleDelete = new EventEmitter<string>();
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -54,6 +55,10 @@ export class TopicComponent implements OnInit{
     );    
   }
 
+  onToggleDelete(topic:string){
+    this.messages = this.messages.filter((comment)=>comment.TopicTitle!=topic)
+    this.ToggleDelete.emit(topic);
+  }
   onToggleCreate(text:Topic){
     this.messages.push({Author:"UserTest",TopicTitle:text})
     this.ToggleCreate.emit({Author:"UserTest",TopicTitle:text});

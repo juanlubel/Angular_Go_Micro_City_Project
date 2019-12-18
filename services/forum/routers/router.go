@@ -16,7 +16,7 @@ func MakePublicTopicRoutes(r *gin.Engine, db *gorm.DB, jwt *utils.JWT) {
 	/* r.Use(JWTAuthMiddleware(true, utils.Secret)) */
 	r.POST("/topics", topicAPI.Create)
 	r.POST("/topic/comment", topicAPI.CreateComment)
-
+	r.DELETE("/topic/:topic", topicAPI.Delete)
 	/* r.PUT("/account/:name", topicAPI.Update)
-	r.DELETE("/account/:name", topicAPI.Delete) */
+	 */
 }

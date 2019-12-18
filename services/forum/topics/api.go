@@ -92,17 +92,19 @@ func (p *TopicAPI) Update(c *gin.Context) {
 	p.TopicService.Save(account)
 
 	c.Status(http.StatusOK)
-}
+}*/
 // Delete :  Deletes an specific content of the table
 func (p *TopicAPI) Delete(c *gin.Context) {
-	owner, _ := strconv.Atoi(c.Param("owner"))
-	account := p.TopicService.FindByOwner(string(owner))
-	if account == (Topic{}) {
-		c.Status(http.StatusBadRequest)
-		return
+	topic := c.Param("topic")
+	account := p.TopicService.FindByOwner(topic)
+	comments := p.TopicService.FindHisComments(topic)
+	p.TopicService.Delete(account)
+	p.TopicService.DeleteComment(topic, comments)
+	_, err := http.Get("http://redis_server:3015/remove") //delete the cache from redis server
+	if err != nil {
+		println("Something wrong deleting  the key in redis server")
+		panic(err)
 	}
 
-	p.TopicService.Delete(account)
-
 	c.Status(http.StatusOK)
-} */
+}

@@ -28,6 +28,10 @@ export class ForumComponent implements OnInit{
     console.log(e)
     this.ForumService.createTopic(e).subscribe()
   }
+  deleteTopic(e:string){
+    console.log(e)
+    this.ForumService.deleteTopic(e).subscribe()
+  }
 
 
 }
