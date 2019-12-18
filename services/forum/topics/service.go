@@ -34,6 +34,6 @@ func (p *TopicService) SaveComment(comment Comment) Comment {
 func (p *TopicService) Delete(topic Topic) {
 	p.TopicRepository.Delete(topic)
 }
-func (p *TopicService) DeleteComment(comment []Comment) {
-	p.TopicRepository.DeleteComment(comment)
+func (p *TopicService) DeleteComment(topic string, comment []Comment) {
+	p.TopicRepository.DeleteComment(topic, comment)
 }

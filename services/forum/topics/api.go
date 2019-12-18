@@ -98,9 +98,8 @@ func (p *TopicAPI) Delete(c *gin.Context) {
 	topic := c.Param("topic")
 	account := p.TopicService.FindByOwner(topic)
 	comments := p.TopicService.FindHisComments(topic)
-
 	p.TopicService.Delete(account)
-	p.TopicService.DeleteComment(comments)
+	p.TopicService.DeleteComment(topic, comments)
 	_, err := http.Get("http://redis_server:3015/remove") //delete the cache from redis server
 	if err != nil {
 		println("Something wrong deleting  the key in redis server")

@@ -62,8 +62,8 @@ func (p *TopicRepository) SaveComment(Comment Comment) Comment {
 
 // Delete : Deletes from the data base
 func (p *TopicRepository) Delete(topic Topic) {
-	p.DB.Delete(&topic)
+	p.DB.Unscoped().Delete(&topic)
 }
-func (p *TopicRepository) DeleteComment(comment []Comment) {
-	p.DB.Delete(&comment)
+func (p *TopicRepository) DeleteComment(topicTittle string, comment []Comment) {
+	p.DB.Where("topic_tittle = ?", topicTittle).Unscoped().Delete(&comment)
 }
