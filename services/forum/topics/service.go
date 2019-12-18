@@ -13,9 +13,6 @@ func (p *TopicService) FindAll() []Topic {
 	return p.TopicRepository.FindAll()
 }
 
-/* func (p *TopicService) FindByBankAndName(owner string, bank string) Topic {
-	return p.TopicRepository.FindByBankAndName(owner, bank)
-} */
 func (p *TopicService) FindByOwner(owner string) Topic {
 	return p.TopicRepository.FindByOwner(owner)
 }
@@ -36,4 +33,7 @@ func (p *TopicService) SaveComment(comment Comment) Comment {
 
 func (p *TopicService) Delete(topic Topic) {
 	p.TopicRepository.Delete(topic)
+}
+func (p *TopicService) DeleteComment(comment []Comment) {
+	p.TopicRepository.DeleteComment(comment)
 }

@@ -64,3 +64,6 @@ func (p *TopicRepository) SaveComment(Comment Comment) Comment {
 func (p *TopicRepository) Delete(topic Topic) {
 	p.DB.Delete(&topic)
 }
+func (p *TopicRepository) DeleteComment(comment []Comment) {
+	p.DB.Delete(&comment)
+}

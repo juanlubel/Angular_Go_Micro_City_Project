@@ -12,7 +12,7 @@ import { Comment } from '../models';
       private apiService: ApiService
     ) {}
     private formatErrors(error: any) {
-      return  throwError(error.error);
+      return  throwError(error);
     }
     getAllTopics(): Observable<[Topic]> {
       return this.apiService.get('topics',"prequery_url")
@@ -32,9 +32,9 @@ import { Comment } from '../models';
           catchError(this.formatErrors)
         );
     }
-    deleteTopic (bank:Topic): Observable<Topic> {
-      console.log(bank)
-      return this.apiService.post('banks','forum_url', bank)
+    deleteTopic (topic:string): Observable<Topic> {
+      console.log(topic)
+      return this.apiService.delete('topic/'+topic,'forum_url')
         .pipe(
           catchError(this.formatErrors)
         );
